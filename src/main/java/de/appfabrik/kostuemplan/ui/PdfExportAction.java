@@ -1,0 +1,98 @@
+package de.appfabrik.kostuemplan.ui;
+
+import de.appfabrik.kostuemplan.application.ExportTarget;
+import de.appfabrik.kostuemplan.application.PdfExportService;
+import de.appfabrik.kostuemplan.application.PdfFileName;
+import de.appfabrik.kostuemplan.application.ProjectService;
+import de.appfabrik.kostuemplan.domain.Project;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import javafx.stage.Window;
+
+/** Captures identity once. Filesystem, database and PDF work runs outside the JavaFX thread. */
+final class PdfExportAction {
+  private final Window owner;
+  private final ProjectService projects;
+  private final PdfExportService exporter;
+  private final AsyncTasks tasks;
+  private final ExportDialogs dialogs;
+  private final Consumer<Boolean> busyChanged;
+  private final BiConsumer<String, Boolean> status;
+  private boolean running;
+
+  PdfExportAction(
+      Window owner,
+      ProjectService projects,
+      PdfExportService exporter,
+      AsyncTasks tasks,
+      ExportDialogs dialogs,
+      Consumer<Boolean> busyChanged,
+      BiConsumer<String, Boolean> status) {
+    this.owner = owner;
+    this.projects = projects;
+    this.exporter = exporter;
+    this.tasks = tasks;
+    this.dialogs = dialogs;
+    this.busyChanged = busyChanged;
+    this.status = status;
+  }
+
+  void start(Project selected) {
+    if (selected == null || running) {
+      return;
+    }
+    setRunning(true);
+    try {
+      var target = dialogs.choose(owner, PdfFileName.suggest(selected.name()));
+      if (target == null) {
+        finish("PDF-Export abgebrochen.", false);
+        return;
+      }
+      status.accept("PDF-Export wird vorbereitet …", false);
+      tasks.submit(
+          () -> ExportTarget.inspect(target),
+          inspected -> {
+            try {
+              boolean approved =
+                  inspected.exists() && dialogs.confirmOverwrite(owner, inspected.path());
+              if (inspected.exists() && !approved) {
+                finish("PDF-Export abgebrochen.", false);
+                return;
+              }
+              status.accept("PDF wird erstellt …", false);
+              tasks.submit(
+                  () -> {
+                    exporter.export(projects.saved(selected.id()), inspected, approved);
+                    return inspected.path();
+                  },
+                  path -> finish("PDF exportiert: " + path, false),
+                  this::failed);
+            } catch (RuntimeException exception) {
+              failed(exception);
+            }
+          },
+          this::failed);
+    } catch (RuntimeException exception) {
+      failed(exception);
+    }
+  }
+
+  private void failed(Throwable failure) {
+    finish(
+        UiSupport.message(
+            failure instanceof java.io.IOException
+                ? PdfExportService.fileFailure(failure)
+                : failure),
+        true);
+  }
+
+  private void finish(String message, boolean error) {
+    setRunning(false);
+    status.accept(message, error);
+  }
+
+  private void setRunning(boolean value) {
+    running = value;
+    busyChanged.accept(value);
+  }
+}

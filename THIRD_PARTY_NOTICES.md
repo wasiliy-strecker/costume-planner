@@ -1,0 +1,63 @@
+# Verwendete Komponenten
+
+KostümPlan verwendet OpenJFX unter GPLv2 mit Classpath Exception und SQLite
+JDBC von Xerial unter Apache License 2.0 und BSD-2-Clause. SQLite selbst ist
+Public Domain. Die eingebettete Java-Laufzeit unterliegt den Lizenzbedingungen
+der beim Bauen gewählten JDK-Distribution. Für die dokumentierten Builds wird
+OpenJDK 21 von Eclipse Temurin unter GPLv2 mit Classpath Exception verwendet.
+
+Die vollständigen Hinweise der Laufzeit bleiben im Verzeichnis `legal` des
+Runtime-Images erhalten. SQLite JDBC bleibt als unverändertes Archiv mit den
+mitgelieferten Lizenzdateien enthalten. Die OpenJFX-Lizenztexte werden aus
+`third-party-licenses` in das Paket übernommen. Diese Datei ergänzt diese Hinweise.
+
+Quellen:
+
+- https://openjdk.org/legal/gplv2+ce.html
+- https://github.com/openjdk/jfx/blob/jfx21/LICENSE
+- https://github.com/xerial/sqlite-jdbc
+- https://sqlite.org/copyright.html
+- https://adoptium.net/about/
+
+Maven, Spotless, SpotBugs und JUnit sind Entwicklungswerkzeuge und werden nicht
+in das App-Image aufgenommen. Dieses Dokument vergibt keine Lizenz für den
+eigenen KostümPlan-Quellcode.
+
+## PDFBox und Schrift, geprüft am 26. Oktober 2026
+
+Apache PDFBox 3.0.8 mit FontBox 3.0.8, pdfbox-io 3.0.8 und Apache Commons Logging
+1.4.0 wird unter Apache License 2.0 verwendet. Die offizielle Downloadseite nennt
+3.0.8 als aktuelle 3.x-Version. PDFBox setzt Java 8 oder neuer voraus.
+Die konkrete Kombination mit Java 21 wird in dieser App getestet und paketiert.
+Die unveränderten Maven-Archive und ihre Lizenz-/NOTICE-Dateien bleiben enthalten.
+Zusätzliche Kopien liegen unter `third-party-licenses` und im Paket unter `legal`.
+Optionale PDFBox-Erweiterungen für Verschlüsselung, JBIG2, JPEG2000 oder TIFF
+werden für diesen Export nicht benötigt und nicht hinzugefügt.
+
+DejaVu Sans 2.37 wird unverändert als `DejaVuSans.ttf` app-lokal mitgeliefert.
+Die Bitstream-Vera-Lizenz erlaubt die Einbettung und Weitergabe zusammen mit
+dieser Anwendung unter Beibehaltung der Hinweise. DejaVu-Änderungen sind Public
+Domain. Die vollständigen Hinweise einschließlich Arev-Anteilen liegen in
+`third-party-licenses/dejavu-LICENSE.txt` und werden mit dem Paket ausgeliefert.
+Die Schrift wird nicht separat verkauft und nicht unter einem fremden Namen verändert.
+
+Quelle der TTF ist das offizielle Releasearchiv `dejavu-sans-ttf-2.37.zip`.
+Die SHA-256-Prüfsumme wurde gegen die offizielle Downloadseite abgeglichen:
+
+```text
+5c6e497a2f36552cb5ffb112c413a6af39c0f3c47653662b90b4fa6499822fd7
+```
+
+Offizielle Quellen:
+
+[PDFBox-Download und Version](https://pdfbox.apache.org/download.html)
+
+[PDFBox-Abhängigkeiten](https://pdfbox.apache.org/3.0/dependencies.html)
+
+[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+
+[DejaVu Download und Prüfsummen](https://dejavu-fonts.github.io/Download.html)
+
+[DejaVu-Lizenz](https://dejavu-fonts.github.io/License.html)
+
+[Offizielles DejaVu-Release](https://github.com/dejavu-fonts/dejavu-fonts/releases/tag/version_2_37)
