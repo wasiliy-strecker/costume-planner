@@ -220,7 +220,16 @@ class PdfExportActionUiTest {
   void mainWindowRequiresSelectedProjectAndEditorHasNoExportAction() throws Exception {
     fx(
         () -> {
-          new MainWindow(stage, service, tasks).show();
+          new MainWindow(
+                  stage,
+                  service,
+                  tasks,
+                  new de.appfabrik.kostuemplan.i18n.Messages(
+                      de.appfabrik.kostuemplan.i18n.AppLanguage.GERMAN),
+                  new de.appfabrik.kostuemplan.persistence.LanguagePreferences(directory),
+                  "de-DE",
+                  false)
+              .show();
           return null;
         });
     await(
@@ -234,7 +243,15 @@ class PdfExportActionUiTest {
           assertFalse(export.isDisabled());
           table.getSelectionModel().clearSelection();
           assertTrue(export.isDisabled());
-          new ProjectEditor(stage, first, null, service, tasks, saved -> fail("Unexpected save"))
+          new ProjectEditor(
+                  stage,
+                  first,
+                  null,
+                  service,
+                  tasks,
+                  saved -> fail("Unexpected save"),
+                  new de.appfabrik.kostuemplan.i18n.Messages(
+                      de.appfabrik.kostuemplan.i18n.AppLanguage.GERMAN))
               .show();
           var editor =
               Window.getWindows().stream()

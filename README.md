@@ -184,3 +184,12 @@ Keine Unteraufgaben, Vorlagen, Abhängigkeiten, Termine, Verantwortlichen,
 manuelle Umsortierung, automatischen Übergänge, Sammel-PDFs, PDF-Import,
 PDF-Bearbeitung, Druckverwaltung, Cloud oder weitere
 Hauptfunktionen. Es wurde nichts gepusht oder veröffentlicht.
+
+## Sprachen und Store-Vorschau
+
+Oberfläche und PDF-Ausgabe unterstützen Deutsch, Englisch, Spanisch, Französisch,
+Italienisch und brasilianisches Portugiesisch. Sprachwahl unter „Sprache“, wirksam
+ab Neustart. Bestandsdaten, Fotos und Checklisten bleiben erhalten.
+[Internationalisierung](docs/internationalization.md) beschreibt Store-Texte, echte
+Linux-Aufnahmen, PDF-Nachweise und Lieferung als Ordner ohne Archiv.
+Windows-Abnahme und Einreichung bleiben separat.

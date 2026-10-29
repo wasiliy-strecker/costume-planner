@@ -16,8 +16,7 @@ public record ExportTarget(Path path, boolean exists, Object fileKey, long size,
       var attributes =
           Files.readAttributes(path, BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
       if (!attributes.isRegularFile()) {
-        throw new ExportException(
-            "Bitte wähle eine normale PDF-Datei als Ziel, keinen Ordner oder Dateiverweis.");
+        throw new ExportException(ExportException.Code.REGULAR_FILE_REQUIRED);
       }
       return new ExportTarget(
           path,

@@ -235,7 +235,14 @@ class ProjectEditorUiTest {
     var photo = PhotoImporter.decode(TestImages.image("png", 60, 40, 0xff00aa));
     var release = new CountDownLatch(1);
     var done = new CountDownLatch(1);
-    PhotoPreview preview = fx(() -> new PhotoPreview(240, 180));
+    PhotoPreview preview =
+        fx(
+            () ->
+                new PhotoPreview(
+                    240,
+                    180,
+                    new de.appfabrik.kostuemplan.i18n.Messages(
+                        de.appfabrik.kostuemplan.i18n.AppLanguage.GERMAN)));
     try {
       fx(
           () -> {
@@ -278,7 +285,16 @@ class ProjectEditorUiTest {
     dialog =
         fx(
             () -> {
-              var editor = new ProjectEditor(owner, project, photo, service, tasks, saved::set);
+              var editor =
+                  new ProjectEditor(
+                      owner,
+                      project,
+                      photo,
+                      service,
+                      tasks,
+                      saved::set,
+                      new de.appfabrik.kostuemplan.i18n.Messages(
+                          de.appfabrik.kostuemplan.i18n.AppLanguage.GERMAN));
               editor.show();
               return Window.getWindows().stream()
                   .filter(window -> window != owner)

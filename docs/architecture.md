@@ -249,3 +249,10 @@ Offizielle Grundlagen:
 [PDFBox 3 und Voraussetzungen](https://pdfbox.apache.org/3.0/dependencies.html),
 [PDFBox-Versionen](https://pdfbox.apache.org/download.html),
 [Java Files.move](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Files.html#move(java.nio.file.Path,java.nio.file.Path,java.nio.file.CopyOption...)).
+
+## Sprachen
+
+`Messages` bleibt pro Prozess unveränderlich. UI und PDF-Renderer erhalten dieselbe
+Sprachwahl. Sprachneutrale Fehlercodes werden erst in der UI übersetzt.
+`LanguagePreferences` speichert atomar neben der Datenbank. Statuscodes,
+Checklisten-UUIDs, Positionen und Schema werden nicht übersetzt oder migriert.

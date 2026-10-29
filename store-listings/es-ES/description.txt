@@ -1,0 +1,5 @@
+KostümPlan
+
+Gestiona nombre, tela o material, color, ubicación y notas. Añade una foto, tres estados y pasos con casillas. Exporta el proyecto guardado con su foto, estado y lista de pasos como PDF.
+
+Tu colección se queda en tu ordenador. No necesitas cuenta ni conexión a Internet. La interfaz está disponible en alemán, inglés, español, francés, italiano y portugués de Brasil. Los cambios de idioma se aplican al volver a abrir la aplicación.

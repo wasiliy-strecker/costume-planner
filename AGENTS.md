@@ -12,7 +12,11 @@ als PDF exportieren. Die frühere Reserve ist ausdrücklich beauftragt.
 Keine weiteren Hauptfunktionen.
 Java 21, JavaFX 21.0.11, SQLite JDBC, Maven mit Wrapper und ein Maven-Modul.
 Pakete `domain`, `application`, `persistence`, `pdf`, `ui`. Keine gemeinsame Runtime.
-Java-Bezeichner englisch, Oberfläche und Projektdokumentation deutsch.
+Java-Bezeichner und GitHub-Metadaten englisch, Projektdokumentation deutsch.
+Die Oberfläche und PDF-Felder unterstützen de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR.
+Neue sichtbare Texte vollständig in allen Katalogen ergänzen. App-Daten, UUIDs
+und Statuscodes bleiben sprachneutral. Sprachwahl gilt ab Neustart.
+`docs/internationalization.md` beschreibt isolierte Prüfungen und Ordnerlieferung.
 
 ## Befehle
 

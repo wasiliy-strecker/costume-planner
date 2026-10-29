@@ -1,0 +1,5 @@
+KostümPlan
+
+Gestisci nome, tessuto o materiale, colore, posizione e note. Aggiungi una foto, tre stati e passi di lavoro con spunte. Esporta il progetto salvato con foto, stato e checklist come PDF.
+
+La raccolta rimane sul tuo computer. Non servono un account o una connessione Internet. L’interfaccia è disponibile in tedesco, inglese, spagnolo, francese, italiano e portoghese brasiliano. Le modifiche alla lingua si applicano al prossimo avvio.

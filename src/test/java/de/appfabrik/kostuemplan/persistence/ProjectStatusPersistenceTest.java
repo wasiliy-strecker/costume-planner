@@ -66,7 +66,11 @@ class ProjectStatusPersistenceTest {
       assertTrue(result.next());
       assertEquals(status.storedValue(), result.getString(1));
       assertEquals("text", result.getString(2));
-      assertNotEquals(status.displayName(), result.getString(1));
+      assertNotEquals(
+          new de.appfabrik.kostuemplan.i18n.Messages(
+                  de.appfabrik.kostuemplan.i18n.AppLanguage.GERMAN)
+              .status(status),
+          result.getString(1));
     }
   }
 

@@ -1,0 +1,5 @@
+KostümPlan
+
+Verwalte Projektname, Stoff oder Material, Farbe, Aufbewahrungsort und Notiz. Ergänze ein Foto, drei Statuswerte und Arbeitsschritte zum Abhaken. Exportiere den gespeicherten Projektstand mit Foto, Status und Checkliste als PDF.
+
+Deine Sammlung bleibt auf deinem Computer. Du brauchst weder Konto noch Internetverbindung. Die Oberfläche gibt es auf Deutsch, Englisch, Spanisch, Französisch, Italienisch und Portugiesisch (Brasilien). Ein Sprachwechsel gilt beim nächsten App-Start.

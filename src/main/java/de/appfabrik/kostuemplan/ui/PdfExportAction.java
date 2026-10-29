@@ -5,6 +5,8 @@ import de.appfabrik.kostuemplan.application.PdfExportService;
 import de.appfabrik.kostuemplan.application.PdfFileName;
 import de.appfabrik.kostuemplan.application.ProjectService;
 import de.appfabrik.kostuemplan.domain.Project;
+import de.appfabrik.kostuemplan.i18n.AppLanguage;
+import de.appfabrik.kostuemplan.i18n.Messages;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javafx.stage.Window;
@@ -12,6 +14,7 @@ import javafx.stage.Window;
 /** Captures identity once. Filesystem, database and PDF work runs outside the JavaFX thread. */
 final class PdfExportAction {
   private final Window owner;
+  private final Messages messages;
   private final ProjectService projects;
   private final PdfExportService exporter;
   private final AsyncTasks tasks;
@@ -28,6 +31,27 @@ final class PdfExportAction {
       ExportDialogs dialogs,
       Consumer<Boolean> busyChanged,
       BiConsumer<String, Boolean> status) {
+    this(
+        owner,
+        projects,
+        exporter,
+        tasks,
+        dialogs,
+        busyChanged,
+        status,
+        new Messages(AppLanguage.GERMAN));
+  }
+
+  PdfExportAction(
+      Window owner,
+      ProjectService projects,
+      PdfExportService exporter,
+      AsyncTasks tasks,
+      ExportDialogs dialogs,
+      Consumer<Boolean> busyChanged,
+      BiConsumer<String, Boolean> status,
+      Messages messages) {
+    this.messages = messages;
     this.owner = owner;
     this.projects = projects;
     this.exporter = exporter;
@@ -43,12 +67,12 @@ final class PdfExportAction {
     }
     setRunning(true);
     try {
-      var target = dialogs.choose(owner, PdfFileName.suggest(selected.name()));
+      var target = dialogs.choose(owner, PdfFileName.suggest(selected.name(), messages));
       if (target == null) {
-        finish("PDF-Export abgebrochen.", false);
+        finish(messages.text("export.cancelled"), false);
         return;
       }
-      status.accept("PDF-Export wird vorbereitet …", false);
+      status.accept(messages.text("export.preparing"), false);
       tasks.submit(
           () -> ExportTarget.inspect(target),
           inspected -> {
@@ -56,16 +80,16 @@ final class PdfExportAction {
               boolean approved =
                   inspected.exists() && dialogs.confirmOverwrite(owner, inspected.path());
               if (inspected.exists() && !approved) {
-                finish("PDF-Export abgebrochen.", false);
+                finish(messages.text("export.cancelled"), false);
                 return;
               }
-              status.accept("PDF wird erstellt …", false);
+              status.accept(messages.text("export.creating"), false);
               tasks.submit(
                   () -> {
                     exporter.export(projects.saved(selected.id()), inspected, approved);
                     return inspected.path();
                   },
-                  path -> finish("PDF exportiert: " + path, false),
+                  path -> finish(messages.text("export.saved", path), false),
                   this::failed);
             } catch (RuntimeException exception) {
               failed(exception);
@@ -82,7 +106,8 @@ final class PdfExportAction {
         UiSupport.message(
             failure instanceof java.io.IOException
                 ? PdfExportService.fileFailure(failure)
-                : failure),
+                : failure,
+            messages),
         true);
   }
 

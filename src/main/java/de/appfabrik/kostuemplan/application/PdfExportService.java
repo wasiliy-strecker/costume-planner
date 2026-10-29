@@ -22,19 +22,18 @@ public final class PdfExportService {
 
   public void export(ProjectDraft saved, ExportTarget target, boolean overwriteConfirmed) {
     if (target.exists() && !overwriteConfirmed) {
-      throw new ExportException("Die vorhandene Datei wurde nicht zum Überschreiben freigegeben.");
+      throw new ExportException(ExportException.Code.OVERWRITE_REQUIRED);
     }
     Path parent = target.path().getParent();
     if (parent == null) {
-      throw new ExportException("Bitte wähle eine PDF-Datei in einem vorhandenen Ordner.");
+      throw new ExportException(ExportException.Code.FOLDER_REQUIRED);
     }
     Path temporary = null;
     try {
       temporary = Files.createTempFile(parent, ".kostuemplan-", ".pdf.tmp");
       writer.write(saved, temporary);
       if (!target.equals(ExportTarget.inspect(target.path()))) {
-        throw new ExportException(
-            "Die Zieldatei wurde inzwischen verändert. Bitte wähle das Ziel erneut.");
+        throw new ExportException(ExportException.Code.TARGET_CHANGED);
       }
       commit.publish(temporary, target);
     } catch (IOException | SecurityException | UnsupportedOperationException exception) {
@@ -51,9 +50,7 @@ public final class PdfExportService {
   }
 
   public static ExportException fileFailure(Throwable cause) {
-    return new ExportException(
-        "Die PDF konnte nicht geschrieben werden. Bitte prüfe Zugriffsrechte und freien Speicherplatz, schließe die Zieldatei in anderen Programmen oder wähle einen anderen lokalen Ordner. Eine vorhandene Zieldatei bleibt erhalten.",
-        cause);
+    return new ExportException(ExportException.Code.WRITE_FAILED, cause);
   }
 
   private static void commitFile(Path temporary, ExportTarget target) throws IOException {

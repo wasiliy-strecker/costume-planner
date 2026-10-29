@@ -37,10 +37,11 @@ try {
     $Common = @(
         "--name", "KostuemPlan", "--app-version", $Version,
         "--vendor", "Wasiliy Strecker", "--description", "KostümPlan - Kostümprojekte als PDF mitnehmen",
+        "--icon", "$Root\assets\branding\icon.ico",
         "--input", $InputDirectory, "--main-jar", "kostuemplan-$Version.jar",
         "--main-class", "de.appfabrik.kostuemplan.Launcher",
         "--module-path", "$env:JAVA_HOME\jmods;$Modules",
-        "--add-modules", "java.se,javafx.controls,jdk.unsupported",
+        "--add-modules", "java.se,javafx.controls,jdk.unsupported,jdk.localedata",
         "--java-options", "--add-modules=javafx.controls",
         "--java-options", "-Dfile.encoding=UTF-8"
     )

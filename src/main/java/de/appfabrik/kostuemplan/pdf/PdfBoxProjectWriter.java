@@ -4,6 +4,8 @@ import de.appfabrik.kostuemplan.application.ExportException;
 import de.appfabrik.kostuemplan.application.PdfWriter;
 import de.appfabrik.kostuemplan.domain.Photo;
 import de.appfabrik.kostuemplan.domain.ProjectDraft;
+import de.appfabrik.kostuemplan.i18n.AppLanguage;
+import de.appfabrik.kostuemplan.i18n.Messages;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -20,6 +22,16 @@ import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 
 /** Fixed A4 layout. Each call owns its document, embedded font and layout state. */
 public final class PdfBoxProjectWriter implements PdfWriter {
+  private final Messages messages;
+
+  public PdfBoxProjectWriter() {
+    this(new Messages(AppLanguage.GERMAN));
+  }
+
+  public PdfBoxProjectWriter(Messages messages) {
+    this.messages = messages;
+  }
+
   @Override
   public void write(ProjectDraft saved, Path temporary) throws IOException {
     try (var document = new PDDocument();
@@ -32,26 +44,30 @@ public final class PdfBoxProjectWriter implements PdfWriter {
       var font = PDType0Font.load(document, source, true);
       document.getDocumentInformation().setTitle(saved.name());
       document.getDocumentInformation().setCreator("KostümPlan");
-      try (var layout = new Layout(document, font)) {
+      try (var layout = new Layout(document, font, messages)) {
         layout.text(saved.name(), 22, 30);
         layout.gap(8);
-        layout.text("Status: " + saved.status().displayName(), 11, 17);
-        layout.field("Material", saved.material());
-        layout.field("Farbe", saved.color());
-        layout.field("Aufbewahrungsort", saved.location());
+        layout.text(messages.text("pdf.status", messages.status(saved.status())), 11, 17);
+        layout.field(messages.text("pdf.material"), saved.material());
+        layout.field(messages.text("pdf.color"), saved.color());
+        layout.field(messages.text("pdf.location"), saved.location());
         if (saved.photo() != null) {
           layout.photo(saved.photo());
         }
         if (!saved.note().isEmpty()) {
-          layout.heading("Notiz");
+          layout.heading(messages.text("pdf.note"));
           layout.text(saved.note(), 11, 17);
         }
-        layout.heading("Arbeitsschritte");
+        layout.heading(messages.text("pdf.steps"));
         if (saved.steps().isEmpty()) {
-          layout.text("Keine Arbeitsschritte hinterlegt.", 11, 17);
+          layout.text(messages.text("pdf.noSteps"), 11, 17);
         }
         for (var step : saved.steps()) {
-          layout.text((step.completed() ? "☑ Erledigt: " : "☐ Offen: ") + step.text(), 11, 17);
+          layout.text(
+              (step.completed() ? messages.text("pdf.completed") : messages.text("pdf.open"))
+                  + step.text(),
+              11,
+              17);
           layout.gap(6);
         }
       }
@@ -63,12 +79,14 @@ public final class PdfBoxProjectWriter implements PdfWriter {
     private static final float MARGIN = 48;
     private static final float WIDTH = PDRectangle.A4.getWidth() - 2 * MARGIN;
     private final PDDocument document;
+    private final Messages messages;
     private final PDType0Font font;
     private final Map<Integer, Float> widths = new HashMap<>();
     private PDPageContentStream stream;
     private float y;
 
-    private Layout(PDDocument document, PDType0Font font) throws IOException {
+    private Layout(PDDocument document, PDType0Font font, Messages messages) throws IOException {
+      this.messages = messages;
       this.document = document;
       this.font = font;
       newPage();
@@ -79,8 +97,8 @@ public final class PdfBoxProjectWriter implements PdfWriter {
       var page = new PDPage(PDRectangle.A4);
       document.addPage(page);
       stream = new PDPageContentStream(document, page);
-      draw("KostümPlan · Projektübersicht", 9, PDRectangle.A4.getHeight() - 30);
-      draw("Seite " + document.getNumberOfPages(), 9, 28);
+      draw(messages.text("pdf.header"), 9, PDRectangle.A4.getHeight() - 30);
+      draw(messages.text("pdf.page", document.getNumberOfPages()), 9, 28);
       y = PDRectangle.A4.getHeight() - 65;
     }
 
@@ -136,9 +154,8 @@ public final class PdfBoxProjectWriter implements PdfWriter {
         return value;
       } catch (IllegalArgumentException exception) {
         throw new ExportException(
-            "Das Zeichen U+"
-                + String.format(java.util.Locale.ROOT, "%04X", point)
-                + " kann in der PDF nicht zuverlässig dargestellt werden. Bitte ersetze es im Projekttext und speichere das Projekt erneut. Es wurde keine PDF übernommen.",
+            ExportException.Code.UNSUPPORTED_GLYPH,
+            "U+" + String.format(java.util.Locale.ROOT, "%04X", point),
             exception);
       }
     }

@@ -1,0 +1,5 @@
+KostümPlan
+
+Manage project name, fabric or material, color, storage location, and notes. Add a photo, three status values, and work steps with checkmarks. Export the saved project with its photo, status, and checklist as a PDF.
+
+Your collection stays on your computer. No account or internet connection is required. The interface is available in German, English, Spanish, French, Italian and Portuguese (Brazil). Language changes apply the next time you start the app.

@@ -108,3 +108,11 @@ Quellen für die später erneut zu prüfenden Vorgaben:
 - [Apple: Distribution und App Sandbox](https://help.apple.com/xcode/mac/current/en.lproj/dev91fe7130a.html)
 - [Microsoft: Store-Überblick](https://learn.microsoft.com/en-us/windows/apps/publish/)
 - [GitHub: Verfügbare Runner](https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/choose-the-runner-for-a-job)
+
+## Internationale Vorschau
+
+Die Laufzeit enthält alle sechs UTF-8-Kataloge, `jdk.localedata`, PDFBox,
+DejaVu samt bisherigen Lizenzen und eigenes PNG/ICO. Paketname `KostuemPlan`
+und sichtbarer Name `KostümPlan` bleiben erhalten. Die isolierte Paketprüfung
+startet ohne Entwicklungs-JDK und prüft auch einen echten PDF-Export.
+Siehe [Internationalisierung](internationalization.md).

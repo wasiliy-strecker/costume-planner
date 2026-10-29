@@ -1,5 +1,7 @@
 package de.appfabrik.kostuemplan.application;
 
+import de.appfabrik.kostuemplan.i18n.AppLanguage;
+import de.appfabrik.kostuemplan.i18n.Messages;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.text.Normalizer;
@@ -9,6 +11,10 @@ public final class PdfFileName {
   private PdfFileName() {}
 
   public static String suggest(String projectName) {
+    return suggest(projectName, new Messages(AppLanguage.GERMAN));
+  }
+
+  public static String suggest(String projectName, Messages messages) {
     String value =
         Normalizer.normalize(projectName, Normalizer.Form.NFC)
             .replaceAll("[\\p{Cntrl}\\p{Cf}<>:\"/\\\\|?*]", "_")
@@ -29,10 +35,10 @@ public final class PdfFileName {
     }
     value = result.toString().replaceAll("^[. ]+|[. ]+$", "");
     if (value.isBlank()) {
-      value = "Kostümprojekt";
+      value = messages.text("pdf.defaultName");
     }
     if (value.matches("(?i)(CON|PRN|AUX|NUL|COM[1-9¹²³]|LPT[1-9¹²³])(?:\\..*)?")) {
-      value = "Projekt_" + value;
+      value = messages.text("pdf.filePrefix") + value;
     }
     return value + ".pdf";
   }
@@ -40,7 +46,7 @@ public final class PdfFileName {
   public static Path withExtension(Path selected) {
     Path fileName = selected.getFileName();
     if (fileName == null) {
-      throw new ExportException("Bitte wähle eine PDF-Datei als Ziel.");
+      throw new ExportException(ExportException.Code.FILE_REQUIRED);
     }
     return fileName.toString().toLowerCase(Locale.ROOT).endsWith(".pdf")
         ? selected

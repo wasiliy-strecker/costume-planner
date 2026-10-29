@@ -1,6 +1,6 @@
 # Prüfbericht
 
-Stand: 26. Oktober 2026, KostümPlan 0.1.0.
+Stand: 29. Oktober 2026, KostümPlan 0.1.0.
 
 ## Ausgeführte automatische Prüfungen
 
@@ -13,9 +13,9 @@ bash -n scripts/run.sh scripts/package.sh
 git diff --cached --check
 ```
 
-Der vollständige Lauf auf einem separaten Xvfb-Bildschirm meldet **138 Tests,
+Der vollständige Lauf auf einem separaten Xvfb-Bildschirm meldet **175 Tests,
 keine Fehler, keine Fehlschläge und keine übersprungenen Tests**.
-122 Fälle laufen ohne Oberfläche, 16 weitere prüfen echte JavaFX-Steuerelemente.
+159 Fälle laufen ohne Oberfläche, 16 weitere prüfen echte JavaFX-Steuerelemente.
 Compiler-Lint mit `-Werror`, Maven Enforcer mit Dependency Convergence, Spotless
 und SpotBugs bestehen. SpotBugs meldet keine Befunde. POM, SpotBugs-XML und
 Workflow-YAML wurden geparst. Shellsyntax, Paketressourcen und Lizenzkopien
@@ -32,6 +32,48 @@ xvfb-run --auto-servernum ./mvnw verify -Dkostuemplan.uiTests=true
 Bei einfachem `./mvnw verify` sind die UI-Tests absichtlich deaktiviert.
 Alle Datenbanken, Bilder und Projekte sind synthetisch. Normale Benutzerdaten
 wurden nicht geöffnet. Logdateien und erzeugte PDFs liegen im ignorierten `target`.
+
+## Internationalisierung vom 29. Oktober 2026
+
+141 Meldungen je Sprache sind für de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR
+vollständig vorhanden. Katalogschlüssel, Formatparameter, Fehlercodes, regionale
+Zahlen, Sortierung und atomare Spracheinstellungen werden automatisch geprüft.
+Die Sprache gilt nach Neustart. Bestehende Daten werden nicht übersetzt.
+
+18 echte JavaFX-Prozesse bestehen zusammen 672 Prüfbedingungen. Sie prüfen
+Texteingaben, Unicode-Suche, Pflichtfelder, Statuswechsel, Fotos, native Dialoge,
+Checklisten mit doppelten Texten, unabhängigen UUIDs und Positionslücken,
+Verwerfen, SQLite-Fehler mit Wiederholung und den Sprachwechsel im Folgeprozess.
+24 echte Bildschirmaufnahmen in 1920 × 1080 wurden in allen sechs Sprachen
+visuell geprüft. Die Editorgröße zeigt sämtliche Arbeitsschritte.
+
+Jeder Sprachlauf exportiert eine echte PDF über den nativen Dialog. PDFBox
+öffnet sie erneut. Poppler prüft unabhängig Text, A4-Seiten, eingebettete Schrift
+und Bildobjekte und rendert sämtliche Seiten. Die sechs vollständigen Projektseiten
+wurden visuell geprüft. Die zusätzlichen parametrisierten PDF-Tests prüfen
+übersetzte Überschriften, Status, Häkchen, Foto, lange Notizen und Seitenränder.
+Die bisherigen Prüfungen sicherer Dateioperationen bestehen weiterhin.
+
+Das neu gebaute eigenständige Paket startet ohne JAVA_HOME mit eingebetteter JVM
+und jdk.localedata. 1234 synthetische Bestandsprojekte belegen die französische
+Zahlengruppierung. Native Fotoauswahl, Unicode-Bearbeitung, Status, Checkliste,
+ein französischer PDF-Export und ein englischer Neustart ohne Originalbild
+bestehen. Die Paket-PDF wurde unabhängig mit Poppler gelesen, gerendert und
+visuell geprüft. Bestandsschema, App-ID, Fotobytes und Schrittidentitäten bleiben
+erhalten. Quellen, Paket und GUI-Nachweise werden per SHA-256 zugeordnet.
+
+Aktuelle Nachweise liegen in den ignorierten Verzeichnissen:
+
+```text
+target/international-ui-verify-v3.log
+target/international-captures-final-v3
+target/international-packaged-final-v3
+```
+
+Sechs Store-Textfassungen, eigenes Vektor-Branding und eigene Kostümmotive liegen
+vor. Die Lieferung ist ein Vorschauordner ohne Archiv. Die Dokumentation des
+ursprünglichen Paketablaufs weiter unten stammt vom 26. Oktober 2026. Der oben
+beschriebene internationale Paketlauf wurde am 29. Oktober neu ausgeführt.
 
 ## Übernommene Grundfunktionen
 

@@ -2,6 +2,7 @@ package de.appfabrik.kostuemplan.ui;
 
 import de.appfabrik.kostuemplan.application.ProjectService;
 import de.appfabrik.kostuemplan.domain.Project;
+import de.appfabrik.kostuemplan.i18n.Messages;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -26,6 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 final class MainWindow {
+  private final Messages messages;
   private final Stage stage;
   private final ProjectService service;
   private final AsyncTasks tasks;
@@ -38,21 +40,65 @@ final class MainWindow {
   private final TextArea note = new TextArea();
   private final VBox checklist = new VBox(6);
   private final Label checklistHint = new Label();
-  private final PhotoPreview preview = new PhotoPreview(240, 180);
-  private final Button add = new Button("+  Projekt hinzufügen");
-  private final Button edit = new Button("Bearbeiten");
-  private final Button delete = new Button("Löschen");
-  private final Button reload = new Button("Neu laden");
+  private final PhotoPreview preview;
+  private final de.appfabrik.kostuemplan.persistence.LanguagePreferences preferences;
+  private String languageChoice;
+  private final boolean languageReadFailed;
+  private final Button language = new Button();
+  private final Button add = new Button();
+  private final Button edit = new Button();
+  private final Button delete = new Button();
+  private final Button reload = new Button();
   private final List<Project> projects = new ArrayList<>();
   private boolean busy;
   private boolean exporting;
-  private final Button export = new Button("Als PDF exportieren …");
+  private final Button export = new Button();
   private final PdfExportAction exportAction;
   private boolean ready;
   private boolean loadFailed;
   private ProjectEditor editor;
 
-  MainWindow(Stage stage, ProjectService service, AsyncTasks tasks) {
+  MainWindow(
+      Stage stage,
+      ProjectService service,
+      AsyncTasks tasks,
+      Messages messages,
+      de.appfabrik.kostuemplan.persistence.LanguagePreferences preferences,
+      String languageChoice,
+      boolean languageReadFailed) {
+    this.messages = messages;
+    this.preferences = preferences;
+    this.languageChoice = languageChoice;
+    this.languageReadFailed = languageReadFailed;
+    preview = new PhotoPreview(240, 180, messages);
+    preview.setId("selected-photo");
+    add.setText("+  " + messages.text("project.add"));
+    edit.setText(messages.text("action.edit"));
+    delete.setText(messages.text("action.delete"));
+    reload.setText(messages.text("action.reload"));
+    language.setText(messages.text("language.title"));
+    language.setId("language-settings");
+    language.setOnAction(
+        event ->
+            new LanguageDialog(
+                    stage,
+                    messages,
+                    tasks,
+                    preferences,
+                    this.languageChoice,
+                    choice -> {
+                      this.languageChoice = choice;
+                      showStatus(messages.text("language.saved"), false);
+                    })
+                .show());
+    UiSupport.textMenu(search, messages);
+    UiSupport.textMenu(note, messages);
+    note.setId("selected-note");
+    status.setId("status-message");
+    count.setId("project-count");
+    edit.setId("edit-project");
+    delete.setId("delete-project");
+    reload.setId("reload-projects");
     this.stage = stage;
     this.service = service;
     this.tasks = tasks;
@@ -61,19 +107,21 @@ final class MainWindow {
             stage,
             service,
             new de.appfabrik.kostuemplan.application.PdfExportService(
-                new de.appfabrik.kostuemplan.pdf.PdfBoxProjectWriter()),
+                new de.appfabrik.kostuemplan.pdf.PdfBoxProjectWriter(messages)),
             tasks,
-            ExportDialogs.nativeDialogs(),
+            ExportDialogs.nativeDialogs(messages),
             value -> {
               exporting = value;
               updateButtons();
             },
-            this::showStatus);
+            this::showStatus,
+            messages);
+    export.setText(messages.text("export.action"));
     export.setId("export-project");
     export.setOnAction(event -> exportAction.start(table.getSelectionModel().getSelectedItem()));
     Label heading = new Label("KostümPlan");
     heading.getStyleClass().add("app-heading");
-    Label subname = new Label("Von der Kostümidee zum fertigen Auftritt.");
+    Label subname = new Label(messages.text("app.subtitle"));
     subname.getStyleClass().add("muted");
     Region spacer = new Region();
     HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -83,11 +131,12 @@ final class MainWindow {
     HBox header = new HBox(20, new VBox(4, heading, subname), spacer, add);
     header.setAlignment(Pos.CENTER_LEFT);
     search.setId("search-projects");
-    search.setPromptText("Projekttexte und Arbeitsschritte durchsuchen");
-    search.setAccessibleText("Projekte durchsuchen");
+    search.setPromptText(messages.text("search.prompt"));
+    search.setAccessibleText(messages.text("search.accessible"));
     search.textProperty().addListener((observable, previous, current) -> refresh(null));
     HBox.setHgrow(search, Priority.ALWAYS);
-    Button clear = new Button("Suche leeren");
+    Button clear = new Button(messages.text("search.clear"));
+    clear.setId("clear-search");
     clear.setOnAction(
         event -> {
           search.clear();
@@ -97,14 +146,14 @@ final class MainWindow {
     HBox searchBar = new HBox(10, search, clear);
     table.setId("projects-table");
     table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-    table.getColumns().add(column("Projektname", Project::name, 300));
+    table.getColumns().add(column(messages.text("field.name"), Project::name, 300));
     TableColumn<Project, String> projectStatus =
-        column("Status", project -> project.status().displayName(), 130);
+        column(messages.text("field.status"), project -> messages.status(project.status()), 150);
     projectStatus.setMinWidth(125);
     table.getColumns().add(projectStatus);
-    table.getColumns().add(column("Material", Project::material, 190));
-    table.getColumns().add(column("Farbe", Project::color, 170));
-    table.getColumns().add(column("Aufbewahrungsort", Project::location, 240));
+    table.getColumns().add(column(messages.text("field.materialShort"), Project::material, 190));
+    table.getColumns().add(column(messages.text("field.color"), Project::color, 170));
+    table.getColumns().add(column(messages.text("field.location"), Project::location, 240));
     table
         .getSelectionModel()
         .selectedItemProperty()
@@ -113,9 +162,7 @@ final class MainWindow {
               note.setText(selected == null ? "" : selected.note());
               showChecklist(selected);
               note.setPromptText(
-                  selected == null
-                      ? "Wähle ein Projekt aus, um seine Notiz zu lesen."
-                      : "Für dieses Projekt ist keine Notiz hinterlegt.");
+                  selected == null ? messages.text("note.select") : messages.text("note.empty"));
               if (selected == null || !selected.hasPhoto()) {
                 preview.showImage(null);
               } else {
@@ -161,13 +208,13 @@ final class MainWindow {
     HBox.setHgrow(actionsSpacer, Priority.ALWAYS);
     HBox actions = new HBox(10, count, actionsSpacer, export, edit, delete);
     actions.setAlignment(Pos.CENTER_LEFT);
-    Label noteHeading = new Label("Notiz");
+    Label noteHeading = new Label(messages.text("field.note"));
     noteHeading.getStyleClass().add("field-label");
     note.setEditable(false);
     note.setWrapText(true);
     note.setPrefRowCount(2);
-    note.setPromptText("Wähle ein Projekt aus, um seine Notiz zu lesen.");
-    note.setAccessibleText("Notiz des ausgewählten Projekts");
+    note.setPromptText(messages.text("note.select"));
+    note.setAccessibleText(messages.text("note.accessible"));
     status.setWrapText(true);
     status.setMinHeight(Region.USE_PREF_SIZE);
     status.getStyleClass().add("muted");
@@ -175,11 +222,11 @@ final class MainWindow {
     status.setMinWidth(0);
     HBox.setHgrow(status, Priority.ALWAYS);
     reload.setOnAction(event -> load());
-    reload.setPrefWidth(120);
+
     reload.setMinWidth(Region.USE_PREF_SIZE);
-    HBox footer = new HBox(16, status, reload);
+    HBox footer = new HBox(16, status, language, reload);
     footer.setAlignment(Pos.CENTER_LEFT);
-    Label checklistHeading = new Label("Arbeitsschritte");
+    Label checklistHeading = new Label(messages.text("checklist.heading"));
     checklistHeading.getStyleClass().add("field-label");
     checklistHint.getStyleClass().add("muted");
     checklistHint.setWrapText(true);
@@ -211,6 +258,7 @@ final class MainWindow {
               search.selectAll();
             });
     stage.setTitle("KostümPlan");
+    UiSupport.icon(stage);
     stage.setMinWidth(860);
     stage.setMinHeight(700);
     stage.setScene(scene);
@@ -229,14 +277,16 @@ final class MainWindow {
     checklist.getChildren().clear();
     checklistHint.setText(
         project == null
-            ? "Wähle ein Projekt aus, um seine Checkliste zu sehen."
+            ? messages.text("checklist.select")
             : project.steps().isEmpty()
-                ? "Noch keine Arbeitsschritte. Ergänze sie über „Bearbeiten“."
-                : "Gespeicherter Stand. Änderungen über „Bearbeiten“.");
+                ? messages.text("checklist.none")
+                : messages.text("checklist.saved"));
     if (project != null) {
       for (var step : project.steps()) {
         Label label = new Label((step.completed() ? "✓  " : "○  ") + step.text());
-        label.setAccessibleText((step.completed() ? "Erledigt: " : "Offen: ") + step.text());
+        label.setAccessibleText(
+            messages.text(
+                step.completed() ? "checklist.completed" : "checklist.open", step.text()));
         label.setWrapText(true);
         label.setMinHeight(Region.USE_PREF_SIZE);
         label.getStyleClass().add(step.completed() ? "completed-step" : "open-step");
@@ -265,7 +315,7 @@ final class MainWindow {
     }
     setBusy(true);
     loadFailed = false;
-    showStatus("Sammlung wird geöffnet …", false);
+    showStatus(messages.text("loading"), false);
     refresh(null);
     tasks.submit(
         service::load,
@@ -275,13 +325,13 @@ final class MainWindow {
           ready = true;
           setBusy(false);
           refresh(null);
-          showStatus("Lokal auf diesem Computer gespeichert", false);
+          showStatus(messages.text(languageReadFailed ? "language.loadError" : "stored"), false);
         },
         failure -> {
           loadFailed = true;
           setBusy(false);
           refresh(null);
-          showStatus(UiSupport.message(failure), true);
+          showStatus(UiSupport.message(failure, messages), true);
         });
   }
 
@@ -303,25 +353,19 @@ final class MainWindow {
               });
     }
     count.setText(
-        !ready
-            ? ""
-            : search.getText().isBlank()
-                ? projects.size() + (projects.size() == 1 ? " Projekt" : " Projekte")
-                : matches.size() + " von " + projects.size() + " Projekten");
+        !ready ? "" : messages.count(matches.size(), projects.size(), !search.getText().isBlank()));
     if (loadFailed) {
-      emptyTitle.setText("Sammlung nicht geladen");
-      emptyHint.setText("Bitte beachte den Hinweis unten und versuche es mit „Neu laden“ erneut.");
+      emptyTitle.setText(messages.text("empty.failed"));
+      emptyHint.setText(messages.text("empty.failedHint"));
     } else if (!ready) {
-      emptyTitle.setText("Deine Sammlung wird geöffnet …");
+      emptyTitle.setText(messages.text("loading"));
       emptyHint.setText("");
     } else if (projects.isEmpty()) {
-      emptyTitle.setText("Platz für dein erstes Projekt");
-      emptyHint.setText(
-          "Mit „Projekt hinzufügen“ legst du deine Sammlung an. Ein Projektname genügt für den Anfang.");
+      emptyTitle.setText(messages.text("empty.title"));
+      emptyHint.setText(messages.text("empty.hint"));
     } else {
-      emptyTitle.setText("Keine Projekte gefunden");
-      emptyHint.setText(
-          "Versuche einen anderen Suchbegriff oder leere die Suche, um alle Projekte zu sehen.");
+      emptyTitle.setText(messages.text("empty.search"));
+      emptyHint.setText(messages.text("empty.searchHint"));
     }
     updateButtons();
   }
@@ -348,15 +392,16 @@ final class MainWindow {
                     refresh(saved.id());
                     showStatus(
                         ProjectService.search(List.of(saved), search.getText()).isEmpty()
-                            ? "Projekt gespeichert. Es passt nicht zur aktuellen Suche."
-                            : "Lokal auf diesem Computer gespeichert",
+                            ? messages.text("saved.filtered")
+                            : messages.text("stored"),
                         false);
-                  });
+                  },
+                  messages);
           editor.show();
         },
         failure -> {
           setBusy(false);
-          showStatus(UiSupport.message(failure), true);
+          showStatus(UiSupport.message(failure, messages), true);
         });
   }
 
@@ -374,14 +419,14 @@ final class MainWindow {
     }
     if (!UiSupport.confirm(
         stage,
-        "Projekt löschen?",
-        "„" + selected.name() + "“ wird dauerhaft aus deiner Sammlung entfernt.",
-        "Löschen",
-        "Abbrechen")) {
+        messages.text("delete.title"),
+        messages.text("delete.detail", selected.name()),
+        messages.text("action.delete"),
+        messages.text("action.cancel"))) {
       return;
     }
     setBusy(true);
-    showStatus("Projekt wird gelöscht …", false);
+    showStatus(messages.text("delete.busy"), false);
     tasks.submit(
         () -> {
           service.delete(selected.id());
@@ -391,11 +436,11 @@ final class MainWindow {
           projects.removeIf(project -> project.id() == deleted.id());
           setBusy(false);
           refresh(null);
-          showStatus("Lokal auf diesem Computer gespeichert", false);
+          showStatus(messages.text("stored"), false);
         },
         failure -> {
           setBusy(false);
-          showStatus(UiSupport.message(failure), true);
+          showStatus(UiSupport.message(failure, messages), true);
         });
   }
 
@@ -408,6 +453,7 @@ final class MainWindow {
 
   private void updateButtons() {
     add.setDisable(busy || exporting || !ready || loadFailed);
+    language.setDisable(busy || exporting || !ready || loadFailed);
     reload.setDisable(busy || exporting);
     boolean unavailable =
         busy || exporting || loadFailed || table.getSelectionModel().getSelectedItem() == null;

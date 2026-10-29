@@ -31,6 +31,63 @@ class PdfBoxProjectWriterTest {
   private final PdfBoxProjectWriter writer = new PdfBoxProjectWriter();
 
   @ParameterizedTest
+  @EnumSource(de.appfabrik.kostuemplan.i18n.AppLanguage.class)
+  void translatedPdfPreservesContentImagesAndPageBounds(
+      de.appfabrik.kostuemplan.i18n.AppLanguage language) throws Exception {
+    var messages = new de.appfabrik.kostuemplan.i18n.Messages(language);
+    var photo = PhotoImporter.decode(TestImages.image("png", 320, 180, 0x457c8b));
+    var saved =
+        new ProjectDraft(
+            "Étoile – ação",
+            "Leinen & Tüll",
+            "Türkis",
+            "Kostümkiste 2",
+            "Grüße, café, coração\n" + "Lange Notiz. ".repeat(120),
+            photo,
+            ProjectStatus.STARTED,
+            List.of(
+                step("Schnitt prüfen – ação", true, 0), step("Schnitt prüfen – ação", false, 2)));
+    var output = directory.resolve(language.tag() + ".pdf");
+    new PdfBoxProjectWriter(messages).write(saved, output);
+    try (var pdf = Loader.loadPDF(output.toFile())) {
+      var text = new BoundsStripper().getText(pdf);
+      for (var value :
+          List.of(
+              saved.name(),
+              messages.text("pdf.header"),
+              messages.text("pdf.status", messages.status(saved.status())),
+              messages.text("pdf.material"),
+              messages.text("pdf.color"),
+              messages.text("pdf.location"),
+              messages.text("pdf.note"),
+              messages.text("pdf.steps"),
+              messages.text("pdf.completed").strip(),
+              messages.text("pdf.open").strip(),
+              "Schnitt prüfen – ação")) {
+        assertTrue(text.contains(value), language.tag() + ": " + value);
+      }
+      assertEquals(2, text.split("Schnitt prüfen – ação", -1).length - 1);
+      var renderer = new PDFRenderer(pdf);
+      for (int page = 0; page < pdf.getNumberOfPages(); page++) {
+        assertTrue(text.contains(messages.text("pdf.page", page + 1)));
+        var image = renderer.renderImageWithDPI(page, 72);
+        assertTrue(image.getWidth() > 590);
+        image.flush();
+      }
+      assertTrue(pdf.getPage(0).getResources().getXObjectNames().iterator().hasNext());
+    }
+    var bad = new ProjectDraft("東京", "", "", "", "", null, ProjectStatus.PLANNED, List.of());
+    var error =
+        assertThrows(
+            ExportException.class,
+            () -> new PdfBoxProjectWriter(messages).write(bad, directory.resolve("bad.pdf")));
+    assertEquals(ExportException.Code.UNSUPPORTED_GLYPH, error.code());
+    assertEquals("U+6771", error.detail());
+    assertTrue(
+        messages.text("exportError." + error.code().name(), error.detail()).contains("U+6771"));
+  }
+
+  @ParameterizedTest
   @EnumSource(ProjectStatus.class)
   void fullProjectEmbedsPhotoFontUnicodeAndIndependentChecks(ProjectStatus status)
       throws Exception {
@@ -58,7 +115,10 @@ class PdfBoxProjectWriterTest {
               "Kostümkiste 2",
               "„Schön“ • 25 € ± ½",
               "Letzte Zeile: Grüße!",
-              "Status: " + status.displayName(),
+              "Status: "
+                  + new de.appfabrik.kostuemplan.i18n.Messages(
+                          de.appfabrik.kostuemplan.i18n.AppLanguage.GERMAN)
+                      .status(status),
               "☑ Erledigt: Schnitt prüfen",
               "☐ Offen: Saum nähen")) {
         assertTrue(text.contains(expected), text);
