@@ -84,3 +84,21 @@ Offizielle Quellen:
 [DejaVu-Lizenz](https://dejavu-fonts.github.io/License.html)
 
 [Offizielles DejaVu-Release](https://github.com/dejavu-fonts/dejavu-fonts/releases/tag/version_2_37)
+
+## Schrift der Benutzeroberfläche
+
+Die JavaFX-Oberfläche verwendet die unveränderten Regular- und Bold-Dateien
+von Noto Sans CJK JP 2.004 unter SIL Open Font License 1.1.
+Copyright © 2014–2021 Adobe. Die App lädt die mitgelieferten OTF-Dateien direkt.
+Dadurch benötigen die abgedeckten lateinischen und CJK-Zeichen keine auf dem
+Zielrechner installierte Schrift. Weitere Zeichen verwenden die systemabhängige
+JavaFX-Ersatzschrift. Eine vollständige Unicode- oder Farbemoji-Abdeckung wird
+nicht zugesagt.
+
+Lizenz, fester Quellstand und SHA-256 stehen unter
+`third-party-licenses/noto-sans-cjk/`. Die Lizenz liegt außerdem bei den
+Schriftressourcen im App-JAR. Pakethelfer übernehmen die Hinweise nach
+`legal/noto-sans-cjk/`. Die Schrift wird nicht systemweit installiert.
+
+Diese UI-Schrift ersetzt nicht die bisherige DejaVu-Schrift im PDF-Renderer.
+Die gesonderte Behandlung dort nicht darstellbarer Zeichen bleibt bestehen.
