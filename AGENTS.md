@@ -31,7 +31,7 @@ bash -n scripts/run.sh scripts/package.sh
 git diff --cached --check
 ```
 
-Die Skripte finden bei fehlendem `JAVA_HOME` auch `$HOME/.local/jdk-21`.
+Die Skripte finden bei fehlendem `JAVA_HOME` auch `$HOME/.local/share/kostuemplan/jdk-21.0.13+9`.
 Windows verwendet `mvnw.cmd` und `scripts/package.ps1`. Native Paketierung
 und Grenzen sind in `docs/packaging.md` beschrieben.
 
@@ -71,3 +71,18 @@ erzeugen und schließen. Bestehende Datei nur atomar ersetzen, ohne unsicheren
 Fallback. Neue Ziele ohne Überschreiben veröffentlichen. Unbekannte Glyphen
 ausdrücklich melden. PDFBox und DejaVu inklusive Lizenzen app-lokal paketieren.
 PDF-Inhalte durch erneutes Öffnen prüfen und gerenderte Seiten visuell abnehmen.
+
+## Datenschutz und lokale Release-Vorbereitung
+
+Build und CI sind auf Eclipse Temurin 21.0.13+9 festgelegt. Eigene Installation
+je App verwenden. Datenschutzdialog und Store-Textexport verwenden dieselben
+sechs Ressourcen. Foto-, Status-, Checklisten- und PDF-Aussagen müssen dem
+Funktionsumfang dieser App entsprechen. Keine BücherRegal-JSON-Funktion allein
+wegen der gemeinsamen Oberfläche übernehmen.
+
+Der Dialog verwendet die tatsächlichen Fenstermaße nach nativen Größenkorrekturen
+und wird erst nach der Positionierung sichtbar. Destruktive Schaltflächen tragen
+die CSS-Klasse `danger` und einen roten Fokusrahmen.
+
+Microsoft Store: MSIX. Kostenloser GitHub-Download: EXE. Identitäten, Signierung,
+Windows-Abnahme und Veröffentlichung bleiben separate Release-Schritte.

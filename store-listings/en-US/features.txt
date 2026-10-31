@@ -5,3 +5,4 @@ Checklist with your own steps
 Search project details and steps
 Local storage and six languages
 PDF export of one saved project
+Read the privacy policy offline inside the app

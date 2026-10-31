@@ -5,3 +5,4 @@ Checkliste mit eigenen Arbeitsschritten
 Suche in Projekttexten und Schritten
 Lokale Speicherung und sechs Sprachen
 PDF-Export eines gespeicherten Projekts
+Die Datenschutzerklärung direkt in der App offline lesen
