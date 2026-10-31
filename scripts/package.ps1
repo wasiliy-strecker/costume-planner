@@ -59,6 +59,7 @@ try {
         if (Test-Path $Staging) { Remove-Item $Staging -Recurse -Force }
         & "$env:JAVA_HOME\bin\jpackage.exe" --type exe --name KostuemPlan `
             --app-image $AppImage --app-version $Version --vendor "Wasiliy Strecker" `
+            --icon "$Root\assets\branding\icon.ico" `
             --dest $Staging --win-per-user-install --win-menu --win-shortcut `
             --win-menu-group "KostuemPlan" --win-upgrade-uuid "ef194ed0-3f58-4af3-a8d9-ecece05614c9"
         if ($LASTEXITCODE -ne 0) { throw "EXE-Paket fehlgeschlagen. Für JDK 21 wird WiX 3 benötigt." }
