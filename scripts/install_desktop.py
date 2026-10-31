@@ -10,8 +10,8 @@ import sys
 import tempfile
 
 APP_ID = "de.appfabrik.kostuemplan"
-APP_NAME = "KostümPlan"
-LAUNCHER = "KostuemPlan"
+APP_NAME = "Costume Planner"
+LAUNCHER = "Costume Planner"
 WINDOW_CLASS = "de.appfabrik.kostuemplan.ui.ProjectsApplication"
 MARKER = "X-AppFabrik-Managed=true"
 

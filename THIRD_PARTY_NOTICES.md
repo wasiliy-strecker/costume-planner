@@ -1,6 +1,6 @@
 # Verwendete Komponenten
 
-KostümPlan verwendet OpenJFX unter GPLv2 mit Classpath Exception und SQLite
+Costume Planner verwendet OpenJFX unter GPLv2 mit Classpath Exception und SQLite
 JDBC von Xerial unter Apache License 2.0 und BSD-2-Clause. SQLite selbst ist
 Public Domain. Die eingebettete Java-Laufzeit unterliegt den Lizenzbedingungen
 der beim Bauen gewählten JDK-Distribution. Die aktuelle Build-Basis ist
@@ -44,7 +44,7 @@ Die Linux-Prüfung ist keine Lizenz- oder Signaturabnahme eines Windows-Pakets.
 
 Maven, Spotless, SpotBugs und JUnit sind Entwicklungswerkzeuge und werden nicht
 in das App-Image aufgenommen. Dieses Dokument vergibt keine Lizenz für den
-eigenen KostümPlan-Quellcode.
+eigenen Costume Planner-Quellcode.
 
 ## PDFBox und Schrift, geprüft am 26. Oktober 2026
 
@@ -102,3 +102,9 @@ Schriftressourcen im App-JAR. Pakethelfer übernehmen die Hinweise nach
 
 Diese UI-Schrift ersetzt nicht die bisherige DejaVu-Schrift im PDF-Renderer.
 Die gesonderte Behandlung dort nicht darstellbarer Zeichen bleibt bestehen.
+
+## JSON-Sicherung
+
+Gson 2.13.2 und Error Prone Annotations 2.41.0 werden unverändert unter Apache License 2.0 verwendet. Die Lizenzen liegen in `third-party-licenses/gson-LICENSE` und `third-party-licenses/error-prone-annotations-LICENSE` und werden in die App-Pakete übernommen.
+Quellen: [Gson](https://github.com/google/gson/tree/gson-parent-2.13.2)
+und [Error Prone](https://github.com/google/error-prone/tree/v2.41.0).

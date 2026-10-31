@@ -1,4 +1,4 @@
-KostümPlan
+Costume Planner
 
 Verwalte Projektname, Stoff oder Material, Farbe, Aufbewahrungsort und Notiz. Ergänze ein Foto, drei Statuswerte und Arbeitsschritte zum Abhaken. Exportiere den gespeicherten Projektstand mit Foto, Status und Checkliste als PDF.
 

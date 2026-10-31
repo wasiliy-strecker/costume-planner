@@ -43,7 +43,7 @@ public final class PdfBoxProjectWriter implements PdfWriter {
       }
       var font = PDType0Font.load(document, source, true);
       document.getDocumentInformation().setTitle(saved.name());
-      document.getDocumentInformation().setCreator("KostümPlan");
+      document.getDocumentInformation().setCreator("Costume Planner");
       try (var layout = new Layout(document, font, messages)) {
         layout.text(saved.name(), 22, 30);
         layout.gap(8);

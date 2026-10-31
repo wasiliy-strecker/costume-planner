@@ -1,4 +1,4 @@
-KostümPlan
+Costume Planner
 
 Gestiona nombre, tela o material, color, ubicación y notas. Añade una foto, tres estados y pasos con casillas. Exporta el proyecto guardado con su foto, estado y lista de pasos como PDF.
 

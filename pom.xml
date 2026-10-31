@@ -5,7 +5,7 @@
   <groupId>de.appfabrik</groupId>
   <artifactId>kostuemplan</artifactId>
   <version>0.1.0</version>
-  <name>KostümPlan</name>
+  <name>Costume Planner</name>
   <description>Lokale Kostümprojekte mit Foto, Status, Checkliste und Einzelprojekt-PDF.</description>
   <properties>
     <maven.compiler.release>21</maven.compiler.release>
@@ -14,6 +14,9 @@
     <javafx.version>21.0.11</javafx.version>
   </properties>
   <dependencies>
+    <dependency>
+      <groupId>com.google.code.gson</groupId><artifactId>gson</artifactId><version>2.13.2</version>
+    </dependency>
     <dependency>
       <groupId>org.apache.pdfbox</groupId><artifactId>pdfbox</artifactId><version>3.0.8</version>
     </dependency>

@@ -1,4 +1,4 @@
-KostümPlan
+Costume Planner
 
 Manage project name, fabric or material, color, storage location, and notes. Add a photo, three status values, and work steps with checkmarks. Export the saved project with its photo, status, and checklist as a PDF.
 

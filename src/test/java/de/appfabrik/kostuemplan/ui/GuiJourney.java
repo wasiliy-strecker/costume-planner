@@ -164,7 +164,9 @@ public final class GuiJourney {
                           new SqliteProjectRepository(data.resolve("kostuemplan.db"))
                               .findPhoto(saved.id())
                               .bytes(),
-                          Files.readAllBytes(Path.of("assets/store_demo/images/sage.png"))),
+                          de.appfabrik.kostuemplan.application.PhotoImporter.read(
+                                  Path.of("assets/store_demo/images/sage.png"))
+                              .bytes()),
                       "photo bytes survive language change and restart");
                   enter("search-projects", "ÁLVARO");
                   waitFor(() -> ((TableView<?>) find("projects-table")).getItems().size() == 1);
@@ -315,7 +317,21 @@ public final class GuiJourney {
     enter("project-name", title);
     checkContextMenu(messages, output);
     enter("project-material", "Élise O'Connor");
-    enter("project-color", "Sauge · Salbeigrün");
+    click("project-color");
+    fx(
+        () -> {
+          Bounds bounds =
+              find("project-color").localToScreen(find("project-color").getBoundsInLocal());
+          Robot robot = new Robot();
+          robot.mouseMove(bounds.getMinX() + 60, bounds.getMaxY() + 68);
+          robot.mouseClick(MouseButton.PRIMARY);
+          return null;
+        });
+    pause();
+    check(
+        fx(() -> ((javafx.scene.control.ColorPicker) find("project-color")).getValue().getOpacity())
+            > 0,
+        "actual palette selection");
     enter("project-location", "São Paulo · étagère 12");
     enter(
         "project-note",
@@ -431,7 +447,9 @@ public final class GuiJourney {
     check(
         Arrays.equals(
             repository.findPhoto(savedId).bytes(),
-            Files.readAllBytes(Path.of("assets/store_demo/images/lilac.jpg"))),
+            de.appfabrik.kostuemplan.application.PhotoImporter.read(
+                    Path.of("assets/store_demo/images/lilac.jpg"))
+                .bytes()),
         "JPEG replacement saved atomically with text after retry");
     check(
         repository.findAll().stream()
@@ -549,7 +567,9 @@ public final class GuiJourney {
     check(
         Arrays.equals(
             repository.findPhoto(savedId).bytes(),
-            Files.readAllBytes(Path.of("assets/store_demo/images/sage.png"))),
+            de.appfabrik.kostuemplan.application.PhotoImporter.read(
+                    Path.of("assets/store_demo/images/sage.png"))
+                .bytes()),
         "new PNG saved after removal");
     click("clear-search");
     click("language-settings");

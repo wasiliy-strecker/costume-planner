@@ -11,7 +11,7 @@ if (-not $env:JAVA_HOME -or -not (Test-Path "$env:JAVA_HOME\bin\javac.exe") -or
 $env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
 Push-Location $Root
 try {
-    & .\mvnw.cmd --batch-mode --no-transfer-progress package -DskipTests
+    & .\mvnw.cmd --batch-mode --no-transfer-progress package -Dmaven.test.skip=true
     if ($LASTEXITCODE -ne 0) { throw "Maven-Build fehlgeschlagen." }
     [xml]$Pom = Get-Content pom.xml -Raw
     $Version = [string]$Pom.project.version
@@ -20,7 +20,7 @@ try {
     $ImageDestination = Join-Path $Root "target\app-image"
     $Distribution = Join-Path $Root "target\dist"
     # Only generated staging paths are removed, never the user's collection.
-    foreach ($GeneratedPath in @($InputDirectory, $Modules, $ImageDestination)) {
+    foreach ($GeneratedPath in @($InputDirectory, $Modules, (Join-Path $ImageDestination "Costume Planner"))) {
         if (Test-Path $GeneratedPath) { Remove-Item $GeneratedPath -Recurse -Force }
     }
     New-Item "$InputDirectory\legal", $Modules, $ImageDestination, $Distribution -ItemType Directory -Force | Out-Null
@@ -37,11 +37,11 @@ try {
         else { Remove-Item $_.FullName }
     }
     $Common = @(
-        "--name", "KostuemPlan", "--app-version", $Version,
-        "--vendor", "Wasiliy Strecker", "--description", "KostümPlan - Kostümprojekte als PDF mitnehmen",
-        "--icon", "$Root\assets\branding\icon.ico",
+        "--name", "Costume Planner", "--app-version", $Version,
+        "--vendor", "Wasiliy Strecker", "--description", "Costume Planner - deine lokale Projektsammlung",
         "--input", $InputDirectory, "--main-jar", "kostuemplan-$Version.jar",
         "--main-class", "de.appfabrik.kostuemplan.Launcher",
+        "--icon", (Join-Path $Root "assets\branding\icon.ico"),
         "--module-path", "$env:JAVA_HOME\jmods;$Modules",
         "--add-modules", "java.se,javafx.controls,jdk.unsupported,jdk.localedata",
         "--java-options", "--add-modules=javafx.controls",
@@ -49,23 +49,23 @@ try {
     )
     & "$env:JAVA_HOME\bin\jpackage.exe" @Common --type app-image --dest $ImageDestination
     if ($LASTEXITCODE -ne 0) { throw "App-Image konnte nicht gebaut werden." }
-    $AppImage = Join-Path $ImageDestination "KostuemPlan"
-    $Launcher = Join-Path $AppImage "KostuemPlan.exe"
+    $AppImage = Join-Path $ImageDestination "Costume Planner"
+    $Launcher = Join-Path $AppImage "Costume Planner.exe"
     # GUI launchers on Windows do not reliably expose stdout. Wait for the process.
     $Check = Start-Process -FilePath $Launcher -ArgumentList "--version" -Wait -PassThru
     if ($Check.ExitCode -ne 0) { throw "Paketierter Launcher ist fehlgeschlagen." }
     if ($PackageType -eq "exe") {
         $Staging = Join-Path $Root "target\installer-staging"
         if (Test-Path $Staging) { Remove-Item $Staging -Recurse -Force }
-        & "$env:JAVA_HOME\bin\jpackage.exe" --type exe --name KostuemPlan `
+        & "$env:JAVA_HOME\bin\jpackage.exe" --type exe --name "Costume Planner" `
             --app-image $AppImage --app-version $Version --vendor "Wasiliy Strecker" `
             --icon "$Root\assets\branding\icon.ico" `
             --dest $Staging --win-per-user-install --win-menu --win-shortcut `
-            --win-menu-group "KostuemPlan" --win-upgrade-uuid "ef194ed0-3f58-4af3-a8d9-ecece05614c9"
+            --win-menu-group "Costume Planner" --win-upgrade-uuid "ef194ed0-3f58-4af3-a8d9-ecece05614c9"
         if ($LASTEXITCODE -ne 0) { throw "EXE-Paket fehlgeschlagen. Für JDK 21 wird WiX 3 benötigt." }
         $Output = Join-Path $Distribution "kostuemplan-$Version-windows-x64.exe"
         if (Test-Path $Output) { throw "Vorhandenes Paket wird nicht überschrieben: $Output" }
-        Move-Item "$Staging\KostuemPlan-$Version.exe" $Output
+        Move-Item "$Staging\Costume Planner-$Version.exe" $Output
         Write-Host "EXE erstellt, native Abnahme separat durchführen: $Output"
     }
     Write-Host "App-Image erstellt und Launcher gestartet: $AppImage"

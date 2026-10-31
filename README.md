@@ -1,4 +1,4 @@
-# KostümPlan
+# Costume Planner
 
 Von der Kostümidee zum fertigen Auftritt. Verwalte kleine Kostümprojekte mit Projektname,
 Stoff oder Material, Farbe, Aufbewahrungsort, mehrzeiliger Notiz, einem
@@ -6,12 +6,63 @@ optionalen Foto und dem Status **Geplant**, **Angefangen** oder **Fertig**.
 Die Checkliste hält deine Arbeitsschritte fest. Ein gespeichertes Projekt lässt
 sich mit allen Inhalten als PDF exportieren. Alles bleibt lokal.
 
-![KostümPlan mit ausschließlich synthetischen Testdaten](docs/screenshots/kostuemplan.png)
+![Costume Planner mit ausschließlich synthetischen Testdaten](docs/screenshots/kostuemplan.png)
 
-Stufe 5 der Java-Reihe BücherRegal → GarnBox → StrickProjekt → NähPlan → KostümPlan.
+Stufe 5 der Java-Reihe BücherRegal → GarnBox → StrickProjekt → NähPlan → Costume Planner.
 Die bisherige Reserve wurde am 26. Oktober 2026 ausdrücklich beauftragt.
 Gegenüber NähPlan kommt genau eine Hauptfunktion hinzu: der PDF-Export eines Projekts.
 Material ist Freitext ohne Verbindung zu anderen Apps.
+
+## Verbesserungen vom 31. Oktober 2026
+
+Öffentlicher Name in allen Sprachen: **Costume Planner**. Paketkennung und Datenpfade
+bleiben unverändert. Neue Installationen starten auf Englisch, unabhängig von
+der Systemsprache. Eine vorhandene Sprachwahl einschließlich „Automatisch“
+bleibt erhalten. Die erste Store-Veröffentlichung wird auf Deutsch vorbereitet.
+
+Hinzufügen und Bearbeiten öffnen sich zentriert über dem Hauptfenster.
+Beim Laden des Editors blinkt die Tabelle nicht mehr. „Neu laden“ entfällt.
+Speichern, Löschen und Import aktualisieren die Liste automatisch.
+
+Die optionale Farbe wird über einen Farbwähler gewählt. Die Liste zeigt ein
+Farbfeld und einen auch bei Auswahl lesbaren Hexwert. Bestehende Farbtexte
+bleiben erhalten, bis bewusst eine Farbe gewählt oder entfernt wird.
+
+Neu gewählte oder ersetzte Fotos werden proportional auf höchstens 1600 Pixel
+an der längsten Seite verkleinert. Kleine Bilder werden nicht vergrößert.
+Bilder ohne Transparenz werden JPEG mit Qualität 85 %, transparente Bilder PNG.
+EXIF-Ausrichtung wird auf die Pixel angewendet, Quellmetadaten werden nicht
+übernommen. Die Eingabegrenzen bleiben 10 MiB, 6000 Pixel je Seite und
+16 Millionen Pixel. Originaldateien, bestehende Fotos und aus JSON
+wiederhergestellte Fotobytes bleiben unverändert.
+Die Fotoauswahl merkt sich den letzten bestätigten Ordner appweit und über
+Neustarts hinweg in `photo-directory.txt`. Bei nicht erreichbarem Ordner wird
+der Bilder- oder Benutzerordner verwendet. Abbrechen ändert die Einstellung
+nicht. Die Ordnereinstellung gehört nicht zur Sammlungssicherung.
+
+„Exportieren“ und „Importieren“ in der Fußleiste übertragen die gesamte
+Sammlung als JSON, unabhängig von Suchfilter oder Auswahl. Enthalten sind
+Texte, Hexfarben oder alte Farbtexte, Fotos als Base64 und der Projektstatus.
+Auch Checklisten mit Text, Erledigt-Zustand, Reihenfolge und Schrittkennungen
+sind enthalten. Wenn eine Schrittkennung bereits verwendet wird, bekommt nur
+die neu ergänzte Kopie eine neue Kennung. Bestehende Projekte bleiben erhalten.
+
+Das app-eigene Format heißt `costume-planner.collection`, Version 1.
+Import ergänzt atomar. Identische Kopien werden einschließlich ihrer Anzahl
+berücksichtigt, sodass wiederholter Import keine weiteren Duplikate erzeugt.
+Ungültige Dateien oder Fotos führen zum vollständigen Abbruch. Andere
+App-Formate werden nicht als eigene Sicherung eingelesen. Vorhandene
+Exportdateien werden nicht überschrieben.
+
+Es gelten höchstens 10.000 Projekte, 1.048.576 Zeichen je Textfeld und 256 MiB
+je JSON-Datei. Pro Projekt sind höchstens 10.000 Schritte zulässig.
+Auch der Export prüft diese Grenzen vor Übernahme der Zieldatei.
+Bereits vorhandene größere Sammlungen werden nicht gekürzt. Ihre Einträge
+bleiben lesbar, bearbeitbar und löschbar. Für eine vollständige Dateisicherung
+außerhalb dieser Exportgrenzen die App schließen und die Datenbank kopieren.
+Der bisherige PDF-Export des ausgewählten gespeicherten Projekts bleibt
+separat verfügbar. Der JSON-Export sichert die ganze Sammlung einschließlich
+Checklisten. Er verändert den PDF-Ablauf nicht.
 
 ## Starten
 
@@ -43,10 +94,10 @@ Im vorhandenen Linux-Workspace findet `./scripts/run.sh` auch das JDK unter
 `$HOME/.local/share/kostuemplan/jdk-21.0.13+9`. Das lokale Paket mit eingebetteter Laufzeit startet so:
 
 ```bash
-./target/app-image/KostuemPlan/bin/KostuemPlan
+"./target/app-image/Costume Planner/bin/Costume Planner"
 ```
 
-Der sichtbare Produktname lautet KostümPlan. Paketdateien, Launcher und
+Der sichtbare Produktname lautet Costume Planner. Paketdateien, Launcher und
 Datenverzeichnisse verwenden die ASCII-Schreibweise `KostuemPlan` beziehungsweise
 `kostuemplan`. Die App-Kennung ist `de.appfabrik.kostuemplan`.
 
@@ -85,7 +136,7 @@ Projekttreffer. Eine leere Suche zeigt alle Projekte.
 ## Foto
 
 Genau ein JPEG oder PNG auswählen, ansehen, ersetzen oder entfernen.
-KostümPlan prüft den tatsächlichen Bildinhalt und speichert eine eigene Kopie
+Costume Planner prüft den tatsächlichen Bildinhalt und speichert eine eigene Kopie
 in SQLite. Die Quelldatei wird niemals verändert oder gelöscht. Das Foto bleibt
 nach Verschieben oder Löschen der Quelle erhalten.
 
@@ -97,7 +148,7 @@ verworfen. Während Import und Speichern wartet der Dialog auf den Abschluss.
 ## Ein Projekt als PDF mitnehmen
 
 Im Hauptfenster ein Projekt auswählen und „Als PDF exportieren …“ anklicken.
-Im nativen Speicherdialog den Zielordner wählen. KostümPlan schlägt einen
+Im nativen Speicherdialog den Zielordner wählen. Costume Planner schlägt einen
 bereinigten Projektnamen mit Datum und lokaler Uhrzeit einschließlich Sekunden
 vor, zum Beispiel `Sommerkostüm-2026-10-31_09-25-00.pdf`. Der Zeitstempel wird
 beim Öffnen des Dialogs bestimmt. Du kannst den Dateinamen dort ändern.
@@ -160,7 +211,7 @@ Isolierter Teststart mit einem eigenen absoluten Pfad:
 
 ```bash
 ./scripts/run.sh '-Djavafx.args=--data-dir=/tmp/kostuemplan-test'
-./target/app-image/KostuemPlan/bin/KostuemPlan --data-dir=/tmp/kostuemplan-test
+"./target/app-image/Costume Planner/bin/Costume Planner" --data-dir=/tmp/kostuemplan-test
 ```
 
 ## Prüfen und verstehen
@@ -238,7 +289,7 @@ Anwendungseintrag demselben Icon zu.
 Nach dem Linux-App-Image-Bau aus diesem App-Verzeichnis registrieren:
 
 ```bash
-python3 target/app-image/KostuemPlan/install_desktop.py
+python3 "target/app-image/Costume Planner/install_desktop.py"
 ```
 
 Danach lässt sich die App über ihren Namen in der Ubuntu-Anwendungsübersicht

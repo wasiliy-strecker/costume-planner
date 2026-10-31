@@ -1,4 +1,4 @@
-KostümPlan
+Costume Planner
 
 Gérez le nom, le tissu ou la matière, la couleur, l’emplacement et les notes. Ajoutez une photo, trois états et des étapes à cocher. Exportez le projet enregistré avec sa photo, son état et ses étapes en PDF.
 

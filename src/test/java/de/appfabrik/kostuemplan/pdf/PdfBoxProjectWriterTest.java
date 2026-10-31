@@ -233,7 +233,8 @@ class PdfBoxProjectWriterTest {
         assertTrue(index > previous);
         previous = index;
       }
-      String withoutFurniture = text.replaceAll("KostümPlan · Projektübersicht|Seite \\d+|\\s", "");
+      String withoutFurniture =
+          text.replaceAll("Costume Planner · Projektübersicht|Seite \\d+|\\s", "");
       assertTrue(withoutFurniture.contains("Überlänge".repeat(180)));
       assertTrue(withoutFurniture.contains("Kostümstoff".repeat(120)));
       Path evidence = evidence();
