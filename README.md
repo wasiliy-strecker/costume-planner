@@ -98,7 +98,10 @@ verworfen. Während Import und Speichern wartet der Dialog auf den Abschluss.
 
 Im Hauptfenster ein Projekt auswählen und „Als PDF exportieren …“ anklicken.
 Im nativen Speicherdialog den Zielordner wählen. KostümPlan schlägt einen
-bereinigten Projektnamen mit `.pdf` vor. Ohne Auswahl bleibt die Aktion deaktiviert.
+bereinigten Projektnamen mit Datum und lokaler Uhrzeit einschließlich Sekunden
+vor, zum Beispiel `Sommerkostüm-2026-10-31_09-25-00.pdf`. Der Zeitstempel wird
+beim Öffnen des Dialogs bestimmt. Du kannst den Dateinamen dort ändern.
+Ohne Auswahl bleibt die Aktion deaktiviert.
 Eine vorhandene Datei wird nur nach ausdrücklicher Bestätigung ersetzt.
 „Abbrechen“ ist bei der app-eigenen Rückfrage die sichere Vorauswahl.
 
