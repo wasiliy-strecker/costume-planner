@@ -84,6 +84,25 @@ class MessagesTest {
     }
   }
 
+  @ParameterizedTest
+  @EnumSource(AppLanguage.class)
+  void checklistFeedbackAndPhotoAccessibilityAreComplete(AppLanguage language) {
+    var messages = new Messages(language);
+    assertFalse(messages.text("checklist.summary", 2, 3).isBlank());
+    assertFalse(messages.text("checklist.limit", 10_000).isBlank());
+    assertFalse(messages.text("checklist.positionLimit").isBlank());
+    String expected =
+        switch (language) {
+          case ENGLISH -> "Photo of the costume project";
+          case GERMAN -> "Foto des Kostümprojekts";
+          case SPANISH -> "Foto del proyecto de vestuario";
+          case FRENCH -> "Photo du projet de costume";
+          case ITALIAN -> "Foto del progetto del costume";
+          case PORTUGUESE -> "Foto do projeto de fantasia";
+        };
+    assertEquals(expected, messages.text("photo.accessible"));
+  }
+
   @Test
   void formatsCountsWithRegionalGroupingAndPluralRules() {
     assertEquals("1,234 projects", new Messages(AppLanguage.ENGLISH).count(1234, 1234, false));

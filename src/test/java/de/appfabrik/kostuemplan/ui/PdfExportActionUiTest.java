@@ -223,10 +223,17 @@ class PdfExportActionUiTest {
           new MainWindow(
                   stage,
                   service,
+                  new de.appfabrik.kostuemplan.application.CollectionExport(
+                      new SqliteProjectRepository(directory.resolve("kostuemplan.db")),
+                      new de.appfabrik.kostuemplan.persistence.JsonCollectionFile()),
+                  new de.appfabrik.kostuemplan.application.CollectionImport(
+                      new SqliteProjectRepository(directory.resolve("kostuemplan.db")),
+                      new de.appfabrik.kostuemplan.persistence.JsonCollectionFile()),
                   tasks,
                   new de.appfabrik.kostuemplan.i18n.Messages(
                       de.appfabrik.kostuemplan.i18n.AppLanguage.GERMAN),
                   new de.appfabrik.kostuemplan.persistence.LanguagePreferences(directory),
+                  new de.appfabrik.kostuemplan.persistence.PhotoDirectoryPreferences(directory),
                   "de-DE",
                   false)
               .show();
@@ -251,7 +258,8 @@ class PdfExportActionUiTest {
                   tasks,
                   saved -> fail("Unexpected save"),
                   new de.appfabrik.kostuemplan.i18n.Messages(
-                      de.appfabrik.kostuemplan.i18n.AppLanguage.GERMAN))
+                      de.appfabrik.kostuemplan.i18n.AppLanguage.GERMAN),
+                  new de.appfabrik.kostuemplan.persistence.PhotoDirectoryPreferences(directory))
               .show();
           var editor =
               Window.getWindows().stream()
