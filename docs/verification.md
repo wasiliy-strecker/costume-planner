@@ -1,5 +1,23 @@
 # Prüfbericht
 
+## Neue Dialoggröße nach App-Neustart bestätigt, 1. November 2026, 08:21
+
+Beim erneuten Öffnen des Editors lief noch der Prozess von 08:03 Uhr mit den
+bereits geladenen alten Klassen. Das zuvor aktualisierte JAR wird erst von einem
+neuen App-Prozess geladen. Die einmalige Vergrößerung des offenen Fensters allein
+ändert die Standardgröße weiterer Dialoge dieses alten Prozesses nicht.
+
+Den vorhandenen Editor regulär geschlossen. Er schloss ohne Verwerfrückfrage,
+danach wurde die App regulär beendet und das aktualisierte App-Image gestartet.
+JAR-Hash gegen den geprüften Build abgeglichen. Keine Daten gespeichert oder verworfen.
+
+Den leeren Anlegedialog zweimal nacheinander geöffnet und jeweils normal wieder
+geschlossen. Der Fenstermanager meldete beide Male 825 × 675 Pixel einschließlich
+Titelleiste, ohne nachträgliche Größenkorrektur. Es wurde kein Projekt angelegt.
+Der gemeinsame Projektdialog verwendet somit nach dem Prozessneustart die neue
+Startgröße auch bei erneutem Öffnen. Keine erneute Änderung am Laufzeitcode und
+keine Test- oder GUI-Suite. Die App bleibt zum weiteren Nutzertest geöffnet.
+
 ## Größerer Projektdialog, 1. November 2026
 
 Der Dialog zum Hinzufügen und Bearbeiten startet mit 825 × 675 Pixeln statt der
