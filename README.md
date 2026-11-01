@@ -3,8 +3,12 @@
 Von der Kostümidee zum fertigen Auftritt. Verwalte kleine Kostümprojekte mit Projektname,
 Stoff oder Material, Farbe, Aufbewahrungsort, mehrzeiliger Notiz, einem
 optionalen Foto und dem Status **Geplant**, **Angefangen** oder **Fertig**.
-Die Checkliste hält deine Arbeitsschritte fest. Ein gespeichertes Projekt lässt
+Unter „Arbeitsschritte“ hältst du eigene Aufgaben zum Abhaken fest. Ein gespeichertes Projekt lässt
 sich mit allen Inhalten als PDF exportieren. Alles bleibt lokal.
+
+Der Bereich heißt in Oberfläche und PDF einheitlich „Arbeitsschritte“, „Work steps“,
+„Pasos de trabajo“, „Étapes de travail“, „Fasi di lavoro“ beziehungsweise
+„Etapas de trabalho“. Arbeitsschritte sind optional und werden selbst angelegt.
 
 ![Costume Planner mit ausschließlich synthetischen Testdaten](docs/screenshots/kostuemplan.png)
 

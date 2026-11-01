@@ -1,5 +1,31 @@
 # Prüfbericht
 
+## Bezeichnung der Arbeitsschritte, 1. November 2026
+
+Oberfläche und PDF verwenden in allen sechs Sprachen dieselbe Bezeichnung:
+Arbeitsschritte, Work steps, Pasos de trabajo, Étapes de travail, Fasi di lavoro
+und Etapas de trabalho. Die englische Bezeichnung Checklist und entsprechende
+deutsche Hinweise sind ersetzt. Die italienische PDF-Ausgabe verwendet wie
+die Oberfläche Fasi di lavoro. Leerzustand, Auswahlhinweis, gespeicherter Stand
+und die betroffenen Import-/Exporthinweise verwenden ebenfalls Arbeitsschritte.
+Es wurden ausschließlich Texte angepasst. Datenformat und Verhalten bleiben gleich.
+
+`./mvnw --batch-mode --no-transfer-progress verify -Dmaven.test.skip=true`
+bestand mit Compiler-Lint, Enforcer, Spotless und SpotBugs. Protokoll:
+`target/work-steps-verify.log`. Die sechs Sprachdateien wurden auf identische
+UI-/PDF-Überschriften, unveränderte Schlüssel und Platzhalter sowie verbleibende
+Checklist-Bezeichnungen in den Textwerten geprüft. `git diff --check` besteht.
+Gemäß app-lokaler Vorgabe wurden keine Test- oder GUI-Suiten ausgeführt.
+
+Manuelle Abnahme durch den Nutzer: Für jede angebotene Sprache die App nach
+der Sprachwahl neu starten. Im Hauptfenster und im Bearbeitungsdialog die
+Überschrift sowie die Hinweise mit und ohne Arbeitsschritte kontrollieren.
+Ein Projekt mit Arbeitsschritten als PDF exportieren und dieselbe Überschrift
+prüfen. Schritte weiterhin hinzufügen, abhaken und gemeinsam speichern können.
+
+Das vorhandene Linux-App-Image wurde mit dem verifizierten JAR aktualisiert.
+SHA-256 stimmt mit dem Build überein. Der Launcher meldet Costume Planner 0.1.0.
+
 ## Vollständiger Custom-Color-Dialog, 31. Oktober 2026
 
 Der native JavaFX-Farbdialog verwendet jetzt 50 × 34 em bevorzugte Inhaltsgröße,
