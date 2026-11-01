@@ -131,3 +131,11 @@ Sammlung öffnen. Ungespeicherte Entwürfe vor Neustart schützen.
 
 Der Nutzer übernimmt in diesem Auftrag die Tests selbst. Paketbau mit
 `-Dmaven.test.skip=true` und statische Analyse, keine Test- oder GUI-Suite.
+
+## Getrennte App-Informationen, 1. November 2026
+
+„Info“ enthält drei getrennte Einträge: Über die App, Datenschutz und Lizenzen.
+Alle eigenen Erläuterungen und Menütexte in den sechs vorhandenen Katalogen
+pflegen. Die vollständige Datenschutzerklärung bleibt identisch zum Textexport.
+Original-Lizenztexte unverändert einbetten. Neue Fremdkomponenten auch im
+app-lokalen Lizenzindex ergänzen. Versionsangaben stammen aus dem Maven-Build.
