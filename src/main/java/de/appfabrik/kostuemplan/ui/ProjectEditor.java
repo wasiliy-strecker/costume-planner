@@ -186,7 +186,7 @@ final class ProjectEditor {
     VBox root = new VBox(14, heading, hint, scroll, validation, progress, error, actions);
     root.setPadding(new Insets(24));
     VBox.setVgrow(scroll, Priority.ALWAYS);
-    Scene scene = new Scene(root, 800, 780);
+    Scene scene = new Scene(root);
     UiSupport.style(scene);
     scene
         .focusOwnerProperty()
@@ -203,7 +203,8 @@ final class ProjectEditor {
           }
         });
     stage.setScene(scene);
-    UiSupport.centerAfterLayout(stage);
+    // Open 25% larger than the previous effective 660 x 540 window.
+    UiSupport.centerAfterLayout(stage, 825, 675);
     stage.setOnCloseRequest(
         event -> {
           event.consume();

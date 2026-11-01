@@ -1,5 +1,32 @@
 # Prüfbericht
 
+## Größerer Projektdialog, 1. November 2026
+
+Der Dialog zum Hinzufügen und Bearbeiten startet mit 825 × 675 Pixeln statt der
+zuvor tatsächlich verwendeten 660 × 540 Pixel. Beide Maße sind um 25 % erhöht.
+Die Anfangsgröße wird nach `sizeToScene()` gesetzt, damit diese Layoutberechnung
+sie nicht wieder zurücksetzt. Die Größe berücksichtigt den Arbeitsbereich des
+Bildschirms des Hauptfensters. Mindestgröße, Scrollen, Fokusführung und Zentrierung
+bleiben erhalten. Die Anpassung gilt für alle sechs Sprachen.
+
+`./mvnw --batch-mode --no-transfer-progress spotless:apply verify -Dmaven.test.skip=true`
+bestand mit Compiler-Lint, Enforcer, Spotless und SpotBugs. Protokoll:
+`target/editor-size-verify.log`. Diff und Formatierung geprüft. Keine Test- oder
+GUI-Suite ausgeführt, gemäß app-lokaler Vorgabe übernimmt der Nutzer die Abnahme.
+
+Den bereits geöffneten Bearbeitungsdialog über den Fenstermanager auf
+825 × 675 Pixel einschließlich Titelleiste vergrößert und diese Maße nachgelesen.
+Dasselbe Fenster blieb offen. Keine Eingabe gespeichert, verworfen oder geschlossen.
+Das Linux-App-Image enthält das neue JAR. SHA-256 stimmt mit dem geprüften Build
+überein. Die laufende App wurde zum Schutz des offenen Entwurfs nicht neu gestartet.
+
+Manuelle Abnahme nach regulärem Neustart: Hinzufügen und Bearbeiten öffnen.
+Beide Dialoge sollen mit 825 × 675 Pixeln zentriert starten. Auf kleinerem
+Bildschirm die begrenzte Startgröße und sichtbare Speicher-/Abbruchaktionen prüfen.
+Größe ändern, zu Arbeitsschritten scrollen, Eingaben speichern oder verwerfen.
+Die vorhandene Prüfung bei 700 × 560 Pixeln bleibt möglich, da die Mindestgröße
+unverändert ist. Die Startgröße in den weiteren angebotenen Sprachen kontrollieren.
+
 ## Bezeichnung der Arbeitsschritte, 1. November 2026
 
 Oberfläche und PDF verwenden in allen sechs Sprachen dieselbe Bezeichnung:

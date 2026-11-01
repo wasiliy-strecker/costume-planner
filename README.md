@@ -141,6 +141,9 @@ Eine weiterhin sichtbare Auswahl bleibt dem gleichen Projekt zugeordnet.
 
 „Projekt hinzufügen“ und „Bearbeiten“ öffnen denselben Dialog. Nur der
 Projektname ist erforderlich. Gleichnamige Projekte sind unabhängig.
+Der Dialog startet mit 825 × 675 Pixeln und damit in Breite und Höhe jeweils
+25 % größer als zuvor. Auf kleineren Bildschirmen wird die Startgröße an den
+verfügbaren Arbeitsbereich angepasst. Das Fenster bleibt vergrößerbar und scrollbar.
 Neue Projekte beginnen mit „Geplant“ und einer leeren Checkliste.
 Alle drei Statuswerte lassen sich jederzeit ineinander ändern.
 Löschen verlangt eine Bestätigung und entfernt nur das ausgewählte Projekt

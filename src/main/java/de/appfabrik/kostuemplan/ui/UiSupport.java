@@ -6,6 +6,7 @@ import de.appfabrik.kostuemplan.application.StorageException;
 import de.appfabrik.kostuemplan.i18n.Messages;
 import java.util.Objects;
 import javafx.animation.PauseTransition;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
@@ -59,6 +60,10 @@ final class UiSupport {
   }
 
   static void centerAfterLayout(Stage stage) {
+    centerAfterLayout(stage, 0, 0);
+  }
+
+  static void centerAfterLayout(Stage stage, double initialWidth, double initialHeight) {
     PauseTransition placement = new PauseTransition(Duration.millis(150));
     PauseTransition reveal = new PauseTransition(Duration.millis(100));
     // Native window decorations can change the size after the shown event.
@@ -73,11 +78,7 @@ final class UiSupport {
             return;
           }
           Window owner = stage.getOwner();
-          var screens =
-              Screen.getScreensForRectangle(
-                  owner.getX(), owner.getY(), owner.getWidth(), owner.getHeight());
-          var bounds =
-              (screens.isEmpty() ? Screen.getPrimary() : screens.getFirst()).getVisualBounds();
+          var bounds = visualBounds(owner);
           double x = owner.getX() + (owner.getWidth() - stage.getWidth()) / 2;
           double y = owner.getY() + (owner.getHeight() - stage.getHeight()) / 2;
           stage.setX(Math.max(bounds.getMinX(), Math.min(x, bounds.getMaxX() - stage.getWidth())));
@@ -92,6 +93,13 @@ final class UiSupport {
     stage.setOnShown(
         event -> {
           stage.sizeToScene();
+          var bounds = visualBounds(stage.getOwner());
+          if (initialWidth > 0) {
+            stage.setWidth(Math.min(initialWidth, bounds.getWidth()));
+          }
+          if (initialHeight > 0) {
+            stage.setHeight(Math.min(initialHeight, bounds.getHeight()));
+          }
           schedulePlacement.run();
         });
     stage.setOnHidden(
@@ -99,6 +107,13 @@ final class UiSupport {
           placement.stop();
           reveal.stop();
         });
+  }
+
+  private static Rectangle2D visualBounds(Window owner) {
+    var screens =
+        Screen.getScreensForRectangle(
+            owner.getX(), owner.getY(), owner.getWidth(), owner.getHeight());
+    return (screens.isEmpty() ? Screen.getPrimary() : screens.getFirst()).getVisualBounds();
   }
 
   static void textMenu(TextInputControl control, Messages messages) {
