@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.function.Function;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.EventHandler;
@@ -323,7 +322,7 @@ final class MainWindow {
             event.consume();
           } else if (editor != null && editor.isShowing()) {
             event.consume();
-            editor.requestClose();
+            editor.requestClose(stage::hide);
           }
         });
   }
@@ -534,28 +533,26 @@ final class MainWindow {
     if (busy || exporting || !ready || loadFailed || (editor != null && editor.isShowing())) {
       return;
     }
-    FileChooser chooser = new FileChooser();
-    chooser.setTitle(messages.text("backup.export.title"));
-    chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON", "*.json"));
-    chooser.setInitialFileName(
-        "costume-planner-"
-            + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"))
-            + ".json");
-    File selected = chooser.showSaveDialog(stage);
-    if (selected == null) {
+    var target =
+        ExportFileDialog.choose(
+            stage,
+            messages,
+            messages.text("backup.export.title"),
+            "costume-planner-"
+                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"))
+                + ".json",
+            "json",
+            "JSON");
+    if (target == null) {
       return;
     }
-    File target =
-        selected.getName().toLowerCase(Locale.ROOT).endsWith(".json")
-            ? selected
-            : new File(selected.getPath() + ".json");
     setBusy(true);
     showStatus(messages.text("backup.export.busy"), false);
     tasks.submit(
-        () -> exports.export(target.toPath()),
+        () -> exports.export(target),
         total -> {
           setBusy(false);
-          showStatus(messages.text("backup.export.saved", total, target.getName()), false);
+          showStatus(messages.text("backup.export.saved", total, target.getFileName()), false);
         },
         failure -> {
           setBusy(false);

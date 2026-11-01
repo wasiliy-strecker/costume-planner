@@ -18,6 +18,15 @@ Die bisherige Reserve wurde am 26. Oktober 2026 ausdrücklich beauftragt.
 Gegenüber NähPlan kommt genau eine Hauptfunktion hinzu: der PDF-Export eines Projekts.
 Material ist Freitext ohne Verbindung zu anderen Apps.
 
+## Mac-Korrekturen vom 1. November 2026
+
+Cmd+Q fragt bei offenen Änderungen einmal nach. „Weiterbearbeiten“ behält den
+Entwurf, „Verwerfen“ schließt die Anwendung. Laufendes Speichern bleibt geschützt.
+Beim JSON- und PDF-Export auf dem Mac zuerst den Zielordner wählen und danach den
+Dateinamen eingeben. Diese Ordnerfreigabe ermöglicht den Export auch innerhalb
+der Mac-App-Store-Sandbox. Abbruch erstellt keine Datei. Die bestehenden Regeln
+zum Überschreiben bleiben erhalten. [Prüfung und Mac-Abnahme](docs/verification.md).
+
 ## Verbesserungen vom 31. Oktober 2026
 
 Öffentlicher Name in allen Sprachen: **Costume Planner**. Paketkennung und Datenpfade
