@@ -1,0 +1,5 @@
+Kostümideen mit Foto, Farbe und Status im Überblick
+Arbeitsschritte planen und Erledigtes abhaken
+Projekttexte und Arbeitsschritte schnell durchsuchen
+Die gesamte Sammlung mit Fotos und Schritten als JSON sichern
+Einzelne Kostümprojekte oder die gesamte Sammlung als PDF exportieren

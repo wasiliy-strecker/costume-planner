@@ -1,0 +1,1 @@
+Erste Version von Costume Planner für macOS. Verwalte Kostümprojekte mit Fotos, Farben, Status und eigenen Arbeitsschritten. Durchsuche deine Sammlung, sichere sie als JSON und exportiere einzelne Projekte oder die gesamte Sammlung als PDF. Alle Projektdaten bleiben lokal auf deinem Mac.

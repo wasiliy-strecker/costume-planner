@@ -7,6 +7,11 @@ Unter „Arbeitsschritte“ hältst du eigene Aufgaben zum Abhaken fest. Ein ges
 Projekt oder die gesamte Sammlung lässt sich mit allen Inhalten als PDF exportieren.
 Alles bleibt lokal.
 
+Die [deutschen Mac-Store-Inhalte](docs/mac-app-store-fields.md) enthalten Feldtexte,
+fünf Bildentwürfe, synthetische Beispieldaten und echte PDF-Beispiele. Sie werden
+aus der vorhandenen App ohne neuen Build erzeugt. Der Vergleich der Bilder mit
+der tatsächlichen Mac-Oberfläche bleibt offen.
+
 Der Bereich heißt in Oberfläche und PDF einheitlich „Arbeitsschritte“, „Work steps“,
 „Pasos de trabajo“, „Étapes de travail“, „Fasi di lavoro“ beziehungsweise
 „Etapas de trabalho“. Arbeitsschritte sind optional und werden selbst angelegt.

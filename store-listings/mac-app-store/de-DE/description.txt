@@ -1,0 +1,21 @@
+Mit Costume Planner begleitest du deine Kostümideen vom ersten Entwurf bis zum fertigen Auftritt. Ob Cosplay, Theater oder ein selbst gestaltetes Kostüm: Halte Material, Fotos und nächste Schritte an einem Ort fest. Für ein neues Projekt genügt ein Name.
+
+Deine Projekte im Überblick
+Ergänze Stoff oder Material, Farbe, Aufbewahrungsort und persönliche Notizen. Wähle eine Farbe mit dem Farbwähler und füge ein optionales JPEG- oder PNG-Foto hinzu. Neue Fotos werden platzsparend als Kopie gespeichert. Deine Originaldateien bleiben unverändert.
+
+Geplant, angefangen oder fertig
+Gib jedem Projekt einen der drei Statuswerte. Du kannst den Status jederzeit ändern, auch wieder zurück. Sortiere die Liste per Klick nach Name, Status, Material, Farbe oder Aufbewahrungsort.
+
+Arbeitsschritte festhalten
+Erstelle eigene Schritte für Zuschnitt, Nähte, Zubehör und letzte Anpassungen. Bearbeite die Texte und hake Erledigtes ab. Alle Änderungen werden gemeinsam mit dem Projekt gespeichert. Die Häkchen verändern den Projektstatus nicht automatisch.
+
+Als PDF mitnehmen oder teilen
+Exportiere ein ausgewähltes gespeichertes Projekt oder deine gesamte Sammlung als übersichtlichen PDF-Bericht. Enthalten sind die Projektangaben, das vorhandene Foto, Status, Farbwert, Notizen und Arbeitsschritte. In der Sammlung beginnt jedes Projekt auf einer neuen Seite. Eine aktive Suche begrenzt den Sammlungsbericht nicht. Die PDF-Datei kannst du anschließend mit anderen Programmen öffnen, drucken oder weitergeben.
+
+Schnell wiederfinden und sichern
+Durchsuche Projekttexte und Arbeitsschritte. Exportiere die gesamte Sammlung als JSON-Datei, einschließlich Fotos, Farben, Status und sämtlichen Schritten. Beim Import bleiben vorhandene Projekte erhalten. Bereits enthaltene identische Kopien werden übersprungen. Deine Sicherungen speicherst und verwaltest du selbst.
+
+Lokal und ohne Konto
+Costume Planner funktioniert ohne Anmeldung und ohne Internetverbindung. Deine Sammlung bleibt auf deinem Mac. Es gibt keine Werbung, kein Tracking und keine eigene Cloud-Synchronisierung. Die App verschlüsselt ihre lokalen Daten und exportierten Dateien nicht selbst.
+
+Die Oberfläche ist auf Deutsch, Englisch, Spanisch, Französisch, Italienisch und Portugiesisch (Brasilien) verfügbar. Beim ersten Start ist Englisch eingestellt. Unter „Language“ kannst du Deutsch auswählen und die App neu starten.

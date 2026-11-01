@@ -1,0 +1,15 @@
+Costume Planner verwaltet private Kostümprojekte lokal. Es sind kein Konto, keine Anmeldung und kein Demo-Zugang erforderlich. Bitte „Anmeldung erforderlich“ deaktivieren.
+
+Zum Einstieg über „Add project“ ein Projekt anlegen. Nur der Projektname ist erforderlich. Optional Material, Farbe, Aufbewahrungsort, Notizen und ein JPEG- oder PNG-Foto ergänzen. Neue Projekte beginnen mit „Planned“. Der Status kann jederzeit zwischen „Planned“, „Started“ und „Finished“ wechseln.
+
+Im Projekteditor unter „Work steps“ eigene Arbeitsschritte hinzufügen, bearbeiten und abhaken. Texte und Häkchen werden gemeinsam mit „Save“ übernommen. Der Projektstatus bleibt unabhängig davon. Abbrechen und Beenden schützen ungespeicherte Änderungen.
+
+Die App startet auf Englisch. Unter „Language“ Deutsch wählen und die App neu starten, um die deutsche Oberfläche zu verwenden. In der deutschen Oberfläche heißen die Statuswerte „Geplant“, „Angefangen“ und „Fertig“. Die Suche berücksichtigt die Projekttextfelder und Arbeitsschritte.
+
+„Export“ beziehungsweise „Exportieren“ in der Fußleiste sichert die gesamte Sammlung als JSON, einschließlich Fotos, Farben, Status und sämtlichen Schritten. Eine aktive Suche begrenzt den Export nicht. „Import“ beziehungsweise „Importieren“ ergänzt die Sammlung und überspringt bereits enthaltene identische Kopien.
+
+Im Menü „PDF export“ beziehungsweise „PDF-Export“ ein ausgewähltes gespeichertes Projekt oder die gesamte Sammlung exportieren. Der Sammlungsbericht enthält auch Projekte außerhalb der aktiven Suche. Jedes Projekt beginnt auf einer neuen Seite. Die PDF kann anschließend in einem externen PDF-Programm geöffnet werden. Ein eigener PDF-Betrachter gehört nicht zur App.
+
+Beim JSON- und PDF-Export auf macOS zuerst den Zielordner freigeben und danach den Dateinamen eingeben. JSON-Exporte benötigen einen neuen Dateinamen. Vor dem Ersetzen einer vorhandenen PDF fragt die App nach.
+
+Neue Fotos werden als optimierte Kopie gespeichert. Die Originaldateien bleiben erhalten. Die App benötigt keine Internetverbindung und enthält keine Werbung, Analytics oder In-App-Käufe. Die Datenschutzerklärung ist offline unter „Info“ verfügbar.
