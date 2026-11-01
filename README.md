@@ -378,3 +378,14 @@ Alle Inhalte sind offline verfügbar, kopierbar und schreibgeschützt.
 Überschriften und Erläuterungen sind in allen sechs Sprachen vorhanden.
 Rechtliche Originaltexte bleiben in ihrer Originalsprache. Weitere Hinweise
 der eingebetteten Java-Laufzeit bleiben in deren Lizenzordnern erhalten.
+
+## PDF-Export auf externen Datenträgern
+
+Neue Einzel- und Sammlungs-PDFs können auch auf Dateisystemen ohne Hardlinks
+gespeichert werden, zum Beispiel exFAT. Der vollständige Bericht entsteht zuerst
+in einer temporären Datei. Wenn Hardlinks nicht verfügbar sind, wird der gewählte
+Dateiname exklusiv neu angelegt und der fertige Inhalt kopiert. Eine inzwischen
+vorhandene Datei wird dabei nicht überschrieben. Das bestätigte Ersetzen
+bestehender PDFs bleibt atomar. Unterstützt der Datenträger dies nicht, bleibt
+die alte Datei erhalten und ein neuer Dateiname kann verwendet werden.
+Details zu Fehlerfällen stehen im Prüfbericht.

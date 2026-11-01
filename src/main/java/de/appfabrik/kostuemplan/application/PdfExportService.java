@@ -66,9 +66,8 @@ public final class PdfExportService {
           StandardCopyOption.ATOMIC_MOVE,
           StandardCopyOption.REPLACE_EXISTING);
     } else {
-      // Atomic no-clobber publication, including a file appearing after the last check.
-      // Both names refer to the fully closed file until the temporary name is removed.
-      Files.createLink(target.path(), temporary);
+      // Reserve new destinations without overwriting, even on filesystems without hard links.
+      NewFilePublisher.publish(temporary, target.path());
     }
   }
 

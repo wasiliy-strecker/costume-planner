@@ -1,5 +1,50 @@
 # Prüfbericht
 
+## Portable PDF-Exporte, 1. November 2026
+
+Neue Einzel- und Sammlungs-PDFs benötigen nicht mehr zwingend Hardlinks.
+Der gemeinsame Exportdienst verwendet dafür einen app-lokalen Ausweichweg.
+Renderer, PDF-Inhalte, JSON-Transfer und Spracheinstellungen sind unverändert.
+
+Der Export wird vor der Veröffentlichung vollständig in einer temporären Datei
+erzeugt. Unterstützt das Dateisystem Hardlinks, bleibt die bisherige atomare
+Veröffentlichung neuer Dateien erhalten. Andernfalls wird das neue Ziel exklusiv
+angelegt (`CREATE_NEW` beziehungsweise `NewOnly`) und mit dem fertigen Inhalt
+beschrieben. Eine zwischenzeitlich entstandene Datei oder ein symbolischer
+Verweis wird nicht überschrieben. Erfolge werden erst nach geschlossenem
+Ausgabestrom gemeldet. Kontrollierte Schreibfehler entfernen die eigene
+Teildatei, sofern ihre Identität noch nachweisbar ist. Eine inzwischen ersetzte
+Datei wird nicht zur Fehlerbereinigung gelöscht. Bestehende Exporte werden
+weiterhin nur nach Bestätigung atomar ersetzt, ohne unsicheren Überschreibfallback.
+
+Grenze des Ausweichwegs: Das Kopieren einer neuen Datei ist selbst kein atomarer
+Vorgang. Bei hartem Prozessabbruch, abgezogenem Datenträger oder fehlender
+Dateiidentität kann eine unvollständige neue Exportdatei zurückbleiben. Die
+interne Sammlung und zuvor vorhandene Exportdateien werden dadurch nicht
+ersetzt. Die neue Exportdatei dann erneut unter einem neuen Namen erstellen.
+Die Tests simulieren fehlende Hardlink-Unterstützung und Schreibfehler. Ein
+physischer exFAT-Datenträger und native Mac-Sandbox-Ausführung waren hier nicht
+verfügbar. Daraus folgt keine native macOS- oder Store-Freigabe.
+
+Der aktuelle Fehlerkorrekturauftrag umfasst die Verifikation. Die frühere
+Testzurückstellung einer anderen Aufgabe gilt hierfür nicht. Mit dem app-eigenen
+Eclipse Temurin 21.0.13+9 und isoliertem Xvfb-/Openbox-Bildschirm ausgeführt:
+
+```bash
+./mvnw --batch-mode --no-transfer-progress spotless:apply verify -Dkostuemplan.uiTests=true -Dprism.order=sw
+```
+
+258 Tests ohne Fehler oder ausgelassene Fälle. Enforcer, Compiler-Lint,
+Spotless und SpotBugs bestanden. Native Hardlink-Aufrufe auf PDF-Stagingdateien
+wurden für diesen Lauf gezielt mit `EOPNOTSUPP` abgewiesen. Fünf reale
+PDF-Veröffentlichungen durchliefen den Ausweichweg. Die bestehenden PDF-Tests
+öffnen die erzeugten Dateien erneut und prüfen ihren Inhalt. Fünf neue
+Regressionen prüfen Dateisystemfehler, Dateikollisionen, partielle Schreibfehler
+mit Wiederholung und fremde Ersatzdateien während der Bereinigung.
+
+Nachweis: `target/portable-exports-verify.log`. Persönliche JSON- und PDF-Exporte
+blieben unberührt. Keine neue Paketierung oder Veröffentlichung.
+
 ## Getrennte Info-Fenster, 1. November 2026
 
 „Info“ enthält jetzt „Über die App“, „Datenschutz“ und „Lizenzen“. Die kurze
