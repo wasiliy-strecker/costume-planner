@@ -121,6 +121,11 @@ class ProjectServiceTest {
     }
 
     @Override
+    public void readSaved(ProjectPdfSource.Receiver receiver) {
+      throw new StorageException(StorageException.Code.OPERATION);
+    }
+
+    @Override
     public Project create(ProjectDraft draft) {
       throw new StorageException(StorageException.Code.OPERATION);
     }

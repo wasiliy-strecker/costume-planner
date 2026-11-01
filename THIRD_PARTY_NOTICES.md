@@ -57,14 +57,16 @@ Zusätzliche Kopien liegen unter `third-party-licenses` und im Paket unter `lega
 Optionale PDFBox-Erweiterungen für Verschlüsselung, JBIG2, JPEG2000 oder TIFF
 werden für diesen Export nicht benötigt und nicht hinzugefügt.
 
-DejaVu Sans 2.37 wird unverändert als `DejaVuSans.ttf` app-lokal mitgeliefert.
+DejaVu Sans 2.37 wird unverändert als `DejaVuSans.ttf` und `DejaVuSans-Bold.ttf`
+app-lokal mitgeliefert. Der fette Schnitt stammt aus der lokal installierten
+DejaVu-2.37-Distribution und wird ebenfalls in die PDF eingebettet.
 Die Bitstream-Vera-Lizenz erlaubt die Einbettung und Weitergabe zusammen mit
 dieser Anwendung unter Beibehaltung der Hinweise. DejaVu-Änderungen sind Public
 Domain. Die vollständigen Hinweise einschließlich Arev-Anteilen liegen in
 `third-party-licenses/dejavu-LICENSE.txt` und werden mit dem Paket ausgeliefert.
 Die Schrift wird nicht separat verkauft und nicht unter einem fremden Namen verändert.
 
-Quelle der TTF ist das offizielle Releasearchiv `dejavu-sans-ttf-2.37.zip`.
+Quelle der Regular-TTF ist das offizielle Releasearchiv `dejavu-sans-ttf-2.37.zip`.
 Die SHA-256-Prüfsumme wurde gegen die offizielle Downloadseite abgeglichen:
 
 ```text

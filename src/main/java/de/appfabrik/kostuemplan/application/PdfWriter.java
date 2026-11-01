@@ -4,8 +4,12 @@ import de.appfabrik.kostuemplan.domain.ProjectDraft;
 import java.io.IOException;
 import java.nio.file.Path;
 
-/** Writes a complete immutable saved aggregate to a temporary file. No UI or database access. */
+/** Writes complete saved aggregates to a temporary file without depending on UI or storage. */
 @FunctionalInterface
 public interface PdfWriter {
-  void write(ProjectDraft saved, Path temporary) throws IOException;
+  void write(ProjectPdfSource saved, Path temporary) throws IOException;
+
+  default void write(ProjectDraft saved, Path temporary) throws IOException {
+    write(receiver -> receiver.accept(saved), temporary);
+  }
 }

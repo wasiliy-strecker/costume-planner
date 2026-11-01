@@ -11,6 +11,7 @@ public final class ExportException extends RuntimeException {
     WRITE_FAILED,
     FILE_REQUIRED,
     REGULAR_FILE_REQUIRED,
+    EMPTY_COLLECTION,
     UNSUPPORTED_GLYPH
   }
 

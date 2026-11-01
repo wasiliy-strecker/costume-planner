@@ -21,6 +21,10 @@ public final class PdfExportService {
   }
 
   public void export(ProjectDraft saved, ExportTarget target, boolean overwriteConfirmed) {
+    export(receiver -> receiver.accept(saved), target, overwriteConfirmed);
+  }
+
+  public void export(ProjectPdfSource saved, ExportTarget target, boolean overwriteConfirmed) {
     if (target.exists() && !overwriteConfirmed) {
       throw new ExportException(ExportException.Code.OVERWRITE_REQUIRED);
     }

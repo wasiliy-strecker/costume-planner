@@ -16,6 +16,9 @@ public interface ProjectRepository {
   /** Complete saved aggregate, read from one consistent database snapshot. */
   ProjectDraft findSaved(long id);
 
+  /** Every project, including photos and steps, from one read-only snapshot. */
+  void readSaved(ProjectPdfSource.Receiver receiver) throws java.io.IOException;
+
   Project create(ProjectDraft draft);
 
   Project update(long id, ProjectDraft draft);

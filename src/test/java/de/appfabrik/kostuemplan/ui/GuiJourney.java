@@ -268,7 +268,12 @@ public final class GuiJourney {
           "native export embeds project photo");
     }
     screenshot(output.resolve("pdf-export.png"));
-    click("export-project");
+    javafx.application.Platform.runLater(
+        () ->
+            ((javafx.scene.control.MenuButton) find("export-project"))
+                .getItems()
+                .getFirst()
+                .fire());
     String chooser = nativeWindow(messages.text("export.chooser"));
     xdo("windowfocus", "--sync", chooser);
     xdo("key", "--clearmodifiers", "Escape");
@@ -690,7 +695,12 @@ public final class GuiJourney {
   }
 
   private static void exportProject(Path destination, Messages messages) throws Exception {
-    click("export-project");
+    javafx.application.Platform.runLater(
+        () ->
+            ((javafx.scene.control.MenuButton) find("export-project"))
+                .getItems()
+                .getFirst()
+                .fire());
     String chooser = nativeWindow(messages.text("export.chooser"));
     xdo("windowfocus", "--sync", chooser);
     xdo("key", "--clearmodifiers", "ctrl+l");

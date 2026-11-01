@@ -7,7 +7,9 @@ import de.appfabrik.kostuemplan.application.ImportResult;
 import de.appfabrik.kostuemplan.application.PhotoException;
 import de.appfabrik.kostuemplan.application.PhotoImporter;
 import de.appfabrik.kostuemplan.application.ProjectImportSource;
+import de.appfabrik.kostuemplan.application.ProjectPdfSource;
 import de.appfabrik.kostuemplan.application.ProjectRepository;
+import de.appfabrik.kostuemplan.application.ProjectService;
 import de.appfabrik.kostuemplan.application.StorageException;
 import de.appfabrik.kostuemplan.domain.ChecklistStep;
 import de.appfabrik.kostuemplan.domain.Photo;
@@ -178,29 +180,48 @@ public final class SqliteProjectRepository
   public ProjectDraft findSaved(long id) {
     try (Connection connection = connect()) {
       connection.setAutoCommit(false);
-      // First SELECT establishes the snapshot. Steps and photo share this transaction.
-      try (var statement = connection.prepareStatement("SELECT * FROM projects WHERE id = ?")) {
-        statement.setLong(1, id);
-        try (var result = statement.executeQuery()) {
-          if (!result.next()) {
-            throw new StorageException(StorageException.Code.MISSING);
-          }
-          byte[] photo = result.getBytes("photo");
-          return new ProjectDraft(
-              result.getString("name"),
-              result.getString("material"),
-              result.getString("color"),
-              result.getString("location"),
-              result.getString("note"),
-              photo == null ? null : PhotoImporter.decode(photo),
-              ProjectStatus.fromStoredValue(result.getString("status")),
-              readSteps(connection, id).getOrDefault(id, List.of()));
-        }
+      return readSavedProject(connection, id);
+    } catch (SQLException exception) {
+      throw failure(exception);
+    } catch (IllegalArgumentException | PhotoException exception) {
+      throw new StorageException(StorageException.Code.SNAPSHOT, exception);
+    }
+  }
+
+  @Override
+  public void readSaved(ProjectPdfSource.Receiver receiver) throws IOException {
+    try (Connection connection = connect()) {
+      connection.setAutoCommit(false);
+      // The first SELECT pins one snapshot for all projects, photos and work steps.
+      // Only one photo is decoded at a time. The callback consumes it before the next read.
+      for (Project project : ProjectService.search(readProjects(connection), "")) {
+        receiver.accept(readSavedProject(connection, project.id()));
       }
     } catch (SQLException exception) {
       throw failure(exception);
     } catch (IllegalArgumentException | PhotoException exception) {
       throw new StorageException(StorageException.Code.SNAPSHOT, exception);
+    }
+  }
+
+  private static ProjectDraft readSavedProject(Connection connection, long id) throws SQLException {
+    try (var statement = connection.prepareStatement("SELECT * FROM projects WHERE id = ?")) {
+      statement.setLong(1, id);
+      try (var result = statement.executeQuery()) {
+        if (!result.next()) {
+          throw new StorageException(StorageException.Code.MISSING);
+        }
+        byte[] photo = result.getBytes("photo");
+        return new ProjectDraft(
+            result.getString("name"),
+            result.getString("material"),
+            result.getString("color"),
+            result.getString("location"),
+            result.getString("note"),
+            photo == null ? null : PhotoImporter.decode(photo),
+            ProjectStatus.fromStoredValue(result.getString("status")),
+            readSteps(connection, id).getOrDefault(id, List.of()));
+      }
     }
   }
 

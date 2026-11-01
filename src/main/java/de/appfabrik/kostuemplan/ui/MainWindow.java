@@ -77,7 +77,9 @@ final class MainWindow {
   private final List<Project> projects = new ArrayList<>();
   private boolean busy;
   private boolean exporting;
-  private final Button export = new Button();
+  private final MenuButton export = new MenuButton();
+  private final MenuItem exportSelected = new MenuItem();
+  private final MenuItem exportAll = new MenuItem();
   private final PdfExportAction exportAction;
   private boolean ready;
   private boolean loadFailed;
@@ -155,7 +157,14 @@ final class MainWindow {
             messages);
     export.setText(messages.text("export.action"));
     export.setId("export-project");
-    export.setOnAction(event -> exportAction.start(table.getSelectionModel().getSelectedItem()));
+    exportSelected.setText(messages.text("export.selected"));
+    exportSelected.setId("export-selected-pdf");
+    exportSelected.setOnAction(
+        event -> exportAction.start(table.getSelectionModel().getSelectedItem()));
+    exportAll.setText(messages.text("export.all"));
+    exportAll.setId("export-all-pdf");
+    exportAll.setOnAction(event -> exportAction.startCollection());
+    export.getItems().setAll(exportSelected, exportAll);
     Label heading = new Label("Costume Planner");
     heading.getStyleClass().add("app-heading");
     Label subname = new Label(messages.text("app.subtitle"));
@@ -642,7 +651,9 @@ final class MainWindow {
     language.setDisable(busy || exporting || !ready || loadFailed);
     boolean unavailable =
         busy || exporting || loadFailed || table.getSelectionModel().getSelectedItem() == null;
-    export.setDisable(unavailable);
+    export.setDisable(busy || exporting || !ready || loadFailed || projects.isEmpty());
+    exportSelected.setDisable(unavailable);
+    exportAll.setDisable(busy || exporting || !ready || loadFailed || projects.isEmpty());
     edit.setDisable(unavailable);
     delete.setDisable(unavailable);
   }

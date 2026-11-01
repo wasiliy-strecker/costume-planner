@@ -3,12 +3,22 @@
 Eigenständiges Java-Projekt mit eigenem Git-Repository. Übergeordnete Workspace-
 Regeln gelten ergänzend. BücherRegal, GarnBox, StrickProjekt und NähPlan nicht verändern.
 
+Für jede Entwicklungsaufgabe vor der Umsetzung einen lokalen Sicherungscommit
+und nach erfolgreicher Prüfung einen Abschlusscommit erstellen. Bei sauberem
+Arbeitsbaum ist ein ausdrücklich benannter leerer Sicherungscommit zulässig.
+Diese dauerhafte Nutzerregel vom 1. November 2026 gilt für alle Apps im
+App-Factory-Workspace. Fremde Änderungen und persönliche Exporte nicht aufnehmen.
+Kein Push ohne ausdrücklichen Auftrag.
+
 ## Umfang und Architektur
 
 Stufe 5 der Java-Hobby-Reihe. Kostümprojekte mit Textfeldern, einem optionalen Foto,
 den drei Statuswerten Geplant, Angefangen, Fertig und einer einfachen Checkliste.
 Genau eine neue Hauptfunktion gegenüber NähPlan: ein gespeichertes Projekt
-als PDF exportieren. Die frühere Reserve ist ausdrücklich beauftragt.
+als PDF exportieren. Seit dem ausdrücklichen Folgeauftrag vom 1. November 2026
+gehören farbige PDF-Berichte und der Export der gesamten Sammlung ebenfalls dazu.
+Einzelprojekt und Sammlung sind getrennte Optionen im PDF-Menü.
+Die frühere Reserve ist ausdrücklich beauftragt.
 Keine weiteren Hauptfunktionen.
 Java 21, JavaFX 21.0.11, SQLite JDBC, Maven mit Wrapper und ein Maven-Modul.
 Pakete `domain`, `application`, `persistence`, `pdf`, `ui`. Keine gemeinsame Runtime.
@@ -63,8 +73,13 @@ Veröffentlichen ohne Auftrag.
 
 ## PDF-Export
 
-Nur einen gespeicherten Projektstand exportieren. Texte, Foto, Status und Schritte
-in einer Lesetransaktion laden. Renderer bleibt unabhängig von JavaFX und SQLite.
+Ein ausgewähltes gespeichertes Projekt oder die gesamte Sammlung exportieren.
+Texte, Foto, Status und Schritte in einer konsistenten Lesetransaktion laden.
+Sammlungen unabhängig von Suchfilter und Auswahl alphabetisch in der App-Sprache
+ausgeben. Jedes Projekt beginnt auf einer neuen Seite. Fotos nacheinander lesen
+und PDF-Streams auf temporäre Dateien auslagern. Gewählte Hexfarben als Farbkachel
+mit Farbcode zeigen, alte Farbtexte erhalten. Renderer bleibt unabhängig von
+JavaFX und SQLite.
 Native Dateiauswahl nur im UI-Adapter. Dateizugriff und PDF-Erzeugung im Hintergrund.
 Vorhandene Ziele ausdrücklich bestätigen. Temporäre Datei im Zielordner vollständig
 erzeugen und schließen. Bestehende Datei nur atomar ersetzen, ohne unsicheren

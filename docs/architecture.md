@@ -3,7 +3,8 @@
 KostümPlan besteht aus einem Maven-Modul. CRUD, Suche, Fotoimport, Status,
 Checklisten, Entwürfe und Paketierung wurden aus NähPlan gezielt angepasst.
 Eigene Quellen, App-Kennung, Datenpfade und Git-Historie halten die App unabhängig.
-Die einzige neue Hauptfunktion ist der PDF-Export eines gespeicherten Projekts.
+Die neue Hauptfunktion der fünften Stufe ist der PDF-Export. Der Folgeauftrag
+vom 1. November 2026 ergänzt einen farbigen Bericht und die gesamte Sammlung.
 
 ```mermaid
 flowchart LR
@@ -136,7 +137,7 @@ optimierte sRGB-Kopie gespeichert. Bestehende Bildbytes bleiben unverändert.
 
 ## Konsistenter gespeicherter Exportstand
 
-`MainWindow` bietet den Export nur für ein ausgewähltes Projekt an.
+`MainWindow` bietet im PDF-Menü Einzelprojekt und gesamte Sammlung an.
 `PdfExportAction` hält die Projekt-ID einmal fest. Nach der Dateiauswahl und
 gegebenenfalls der Überschreibbestätigung lädt `ProjectService.saved(id)`
 den vollständigen Stand. `SqliteProjectRepository.findSaved` liest Projektzeile
@@ -150,6 +151,15 @@ PDF-Erzeugung. Eine spätere Projektänderung kann den bereits geladenen Wert
 nicht verändern. Tests wechseln parallel komplette Datenbankstände und prüfen,
 dass Text, Foto, Status und Schritte stets zum selben Stand gehören.
 
+`ProjectPdfSource` ergänzt einen Callback-Vertrag für mehrere vollständige
+Projektstände. `ProjectService.allSaved()` bindet ihn an `ProjectRepository.readSaved`.
+Die SQLite-Implementierung hält dieselbe Lesetransaktion während der gesamten
+Sammlung offen. Eine nach App-Sprache sortierte Metadatenliste bestimmt die
+Reihenfolge, danach wird je ein Foto mit seinen Projektdaten gelesen und sofort
+an den Renderer übergeben. Parallele Änderungen können den Snapshot nicht mischen.
+Die sichere Veröffentlichung folgt erst nach dem Ende der Lesetransaktion und
+der vollständigen PDF-Erzeugung. Eine leere Quelle wird ausdrücklich abgelehnt.
+
 Der bestehende Listenpfad lädt Fotos weiterhin erst bei Bedarf. Für den Export
 werden dessen getrennte Listen- und Fotoladevorgänge ausdrücklich nicht kombiniert.
 Ein Auswahlwechsel betrifft nur die Anzeige. Er ändert keine Export-ID.
@@ -160,10 +170,15 @@ während des Schreibens nicht schließen. Es wartet auf Erfolg oder Fehlermeldun
 ## PDF-Erzeugung, Umbrüche und Schrift
 
 `PdfWriter` ist ein kleiner Port. `PdfBoxProjectWriter` setzt ihn mit PDFBox 3.0.8
-um. Der Renderer erhält synthetisch testbare Daten und einen temporären Pfad.
+um. `ProjectPdfLayout` kapselt Zeichnen und Seitenfluss. Der Renderer erhält
+eine Datenquelle über `ProjectPdfSource` und einen temporären Pfad. Der bisherige
+Einzelprojekt-Aufruf bleibt als Default-Methode am Port verfügbar.
 Er kennt keine Dateiauswahl, JavaFX-Steuerelemente oder SQLite-Verbindungen.
-Alle Zustände einschließlich PDF-Dokument, Schrift, Breiten-Cache und aktueller
+Alle Zustände einschließlich PDF-Dokument, Schriften, Breiten-Cache und aktueller
 Seite gehören genau einem Aufruf. Ressourcen werden zuverlässig geschlossen.
+PDFBox lagert Streams in temporäre Dateien aus, damit Bilder großer Sammlungen
+nicht vollständig im Heap liegen. Jedes neue Projekt beginnt auf einer neuen Seite.
+Die globale Seitennummer und Gesamtseitenzahl werden nach dem Rendern ergänzt.
 
 A4-Hochformat, 48 Punkt Rand, 11 Punkt Text und 17 Punkt Zeilenabstand bilden
 das feste Layout. Überschriften sind größer. Vor jeder Zeile wird der verbleibende
@@ -176,12 +191,19 @@ CRLF, CR und Unicode-Zeilentrenner werden zu Zeilenumbrüchen vereinheitlicht,
 Tabulatoren zu vier Leerzeichen. NFC vereinheitlicht kombinierte Umlaute.
 
 JPEG- und PNG-Pixel werden ohne Quelldatei-Metadaten neu eingebettet. Der kleinere
-Skalierungsfaktor aus Spaltenbreite und maximal 225 Punkt Bildhöhe bestimmt die
-Anzeige. Das Seitenverhältnis bleibt gleich. Die maximal zulässigen Bildmaße
+Skalierungsfaktor aus Kartenbreite und verfügbarer Kartenhöhe bestimmt die
+Anzeige. Projektfoto und kurze Angaben stehen nebeneinander. Bei sehr langen
+Angaben wechseln sie in eine vollständig umbrechende Anordnung untereinander.
+Die breite Fotokarte begrenzt die Bildhöhe auf 175 Punkt. Das Seitenverhältnis bleibt gleich. Die maximal zulässigen Bildmaße
 werden bereits beim Import beziehungsweise Lesen aus SQLite geprüft.
 
-Die unveränderte DejaVu Sans 2.37 liegt unter `src/main/resources` und wird als
-TrueType-Subset in jede PDF eingebettet. Es gibt keinen Zugriff auf externe
+Violette Überschriften und abgerundete Karten folgen der App-Palette. Status
+und erledigte Arbeitsschritte erhalten eigene farbige Flächen. Hexfarben werden
+als Farbkachel mit sichtbarem Rand gezeichnet. Ein Alpha-Kanal wird auf ein
+Schachbrettmuster gemischt. Freie Farbtexte erhalten keine erfundene Farbkachel.
+
+Die unveränderten DejaVu-Sans-2.37-Schnitte Regular und Bold liegen unter
+`src/main/resources` und werden als TrueType-Subsets in jede PDF eingebettet. Es gibt keinen Zugriff auf externe
 Schriftserver und keine Abhängigkeit von installierten Systemschriften.
 Nicht kodierbare Zeichen und unsichtbare Steuer-/Formatzeichen werden mit
 `ExportException` samt `U+…` gemeldet. Die Datei wird dann nicht übernommen.

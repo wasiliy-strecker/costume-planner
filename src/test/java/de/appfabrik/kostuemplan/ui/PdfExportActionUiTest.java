@@ -217,7 +217,7 @@ class PdfExportActionUiTest {
   }
 
   @Test
-  void mainWindowRequiresSelectedProjectAndEditorHasNoExportAction() throws Exception {
+  void mainWindowOffersCollectionWithoutSelectionAndEditorHasNoExportAction() throws Exception {
     fx(
         () -> {
           new MainWindow(
@@ -243,13 +243,16 @@ class PdfExportActionUiTest {
         () -> uncheckedFx(() -> !((Button) stage.getScene().lookup("#add-project")).isDisabled()));
     fx(
         () -> {
-          var export = (Button) stage.getScene().lookup("#export-project");
-          assertTrue(export.isDisabled());
+          var export = (javafx.scene.control.MenuButton) stage.getScene().lookup("#export-project");
+          assertFalse(export.isDisabled());
+          assertTrue(export.getItems().getFirst().isDisable());
+          assertFalse(export.getItems().getLast().isDisable());
           var table = (TableView<?>) stage.getScene().lookup("#projects-table");
           table.getSelectionModel().select(0);
-          assertFalse(export.isDisabled());
+          assertFalse(export.getItems().getFirst().isDisable());
           table.getSelectionModel().clearSelection();
-          assertTrue(export.isDisabled());
+          assertFalse(export.isDisabled());
+          assertTrue(export.getItems().getFirst().isDisable());
           new ProjectEditor(
                   stage,
                   first,

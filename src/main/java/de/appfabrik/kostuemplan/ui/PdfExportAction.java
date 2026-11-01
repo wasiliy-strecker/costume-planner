@@ -3,6 +3,7 @@ package de.appfabrik.kostuemplan.ui;
 import de.appfabrik.kostuemplan.application.ExportTarget;
 import de.appfabrik.kostuemplan.application.PdfExportService;
 import de.appfabrik.kostuemplan.application.PdfFileName;
+import de.appfabrik.kostuemplan.application.ProjectPdfSource;
 import de.appfabrik.kostuemplan.application.ProjectService;
 import de.appfabrik.kostuemplan.domain.Project;
 import de.appfabrik.kostuemplan.i18n.AppLanguage;
@@ -62,12 +63,23 @@ final class PdfExportAction {
   }
 
   void start(Project selected) {
-    if (selected == null || running) {
+    if (selected == null) {
+      return;
+    }
+    start(selected.name(), receiver -> receiver.accept(projects.saved(selected.id())));
+  }
+
+  void startCollection() {
+    start(messages.text("pdf.collection"), projects.allSaved());
+  }
+
+  private void start(String name, ProjectPdfSource source) {
+    if (running) {
       return;
     }
     setRunning(true);
     try {
-      var target = dialogs.choose(owner, PdfFileName.suggest(selected.name(), messages));
+      var target = dialogs.choose(owner, PdfFileName.suggest(name, messages));
       if (target == null) {
         finish(messages.text("export.cancelled"), false);
         return;
@@ -86,7 +98,7 @@ final class PdfExportAction {
               status.accept(messages.text("export.creating"), false);
               tasks.submit(
                   () -> {
-                    exporter.export(projects.saved(selected.id()), inspected, approved);
+                    exporter.export(source, inspected, approved);
                     return inspected.path();
                   },
                   path -> finish(messages.text("export.saved", path), false),

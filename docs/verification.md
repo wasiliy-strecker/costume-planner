@@ -1,5 +1,52 @@
 # Prüfbericht
 
+## Farbige Einzel- und Sammlungs-PDFs, 1. November 2026
+
+Das PDF-Menü bietet das ausgewählte Projekt und die gesamte Sammlung an.
+Die Sammlung verwendet einen konsistenten SQLite-Lesestand, lädt Fotos
+nacheinander und beginnt jedes Projekt auf einer neuen Seite. Suchfilter und
+Tabellenauswahl begrenzen die Sammlung nicht. Die Reihenfolge ist alphabetisch
+in der App-Sprache. Sichere Zielprüfung und atomare Veröffentlichung bleiben erhalten.
+
+Das Layout folgt den vorhandenen Flutter-/React-Berichten mit App-Akzenten,
+fetten Überschriften, strukturierten Feldern und proportionalen Fotos. Die eigene
+violette Palette, farbige Statusfelder, Farbkacheln mit Hexcode, Notizkarten,
+Erledigt-Anzeige und globale Seitennummerierung gliedern den Inhalt.
+Fotos bleiben unbeschnitten. Transparente Farbkacheln verwenden ein Schachbrett.
+Freie Farbtexte bleiben unverändert. Ohne gespeichertes Foto erscheint kein
+erfundenes Ersatzbild. Alle neuen Texte sind in sechs Sprachen vorhanden.
+
+Prüfungen:
+
+- `spotless:apply verify -Dmaven.test.skip=true` bestanden mit Compiler-Lint,
+  Enforcer, Spotless und SpotBugs. Protokoll `target/pdf-redesign-final.log`.
+- `test-compile -DskipTests` bestanden. Neue Regressionen für Sammlungsseiten,
+  Foto-/Farbzuordnung, unveränderte Datenbank, konsistenten Snapshot bei parallelem
+  Speichern, leere Sammlung und spätes Exportversagen ergänzt. Bestehende
+  UI-Prüfpfade auf das PDF-Menü angepasst. Gemäß app-lokaler Vorgabe keine
+  JUnit- oder GUI-Suite ausgeführt. Diese Tests wurden nur kompiliert.
+- Synthetische PDFs in allen sechs Sprachen erzeugt und mit PDFBox erneut
+  geöffnet, textuell ausgelesen und gerendert. Alle sechs Beispielprojekte
+  ergeben jeweils eine Seite. Beispiele ohne Foto sowie Sammlungen mit zwei
+  und drei Projekten geprüft. Keine persönlichen Sammlungen verwendet.
+- Ein 20-seitiges Beispiel erhält alle 2.500 Notizphrasen, 1.800 Schrittphrasen
+  und beide Endmarkierungen. Poppler bestätigt für alle erzeugten PDFs, dass
+  sämtliche Texte innerhalb der Seitenränder liegen. Repräsentative volle,
+  minimale, mehrseitige und Sammlungsseiten visuell angesehen.
+- Sammlung aus einer temporären SQLite-Datei exportiert. Die Datenbank bleibt
+  bytegleich. Ressourcen aller Sprachen auf Schlüssel und Platzhalter geprüft.
+
+Beispiele und Renderbilder liegen unter `target/pdf-redesign-preview/`.
+Die [Layoutaufnahme](screenshots/pdf-report.png) enthält ausschließlich
+synthetische Texte und das vorhandene app-lokale Demomotiv.
+
+Manuelle Abnahme: In „PDF-Export“ beide Optionen ausprobieren. Ohne Auswahl
+muss die Sammlung exportierbar bleiben. Bei aktivem Suchfilter muss sie alle
+gespeicherten Projekte enthalten. Projektfoto, Farbkachel, Notiz und Schritte
+je Projekt vergleichen. Lange Texte, leere Felder, weiße/transparente Farben,
+Abbruch und Überschreibbestätigung prüfen. Bereits exportierte PDFs sind
+unabhängige Dateien und erhalten das neue Layout erst durch erneuten Export.
+
 ## Neue Dialoggröße nach App-Neustart bestätigt, 1. November 2026, 08:21
 
 Beim erneuten Öffnen des Editors lief noch der Prozess von 08:03 Uhr mit den

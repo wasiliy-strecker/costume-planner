@@ -3,8 +3,9 @@
 Von der Kostümidee zum fertigen Auftritt. Verwalte kleine Kostümprojekte mit Projektname,
 Stoff oder Material, Farbe, Aufbewahrungsort, mehrzeiliger Notiz, einem
 optionalen Foto und dem Status **Geplant**, **Angefangen** oder **Fertig**.
-Unter „Arbeitsschritte“ hältst du eigene Aufgaben zum Abhaken fest. Ein gespeichertes Projekt lässt
-sich mit allen Inhalten als PDF exportieren. Alles bleibt lokal.
+Unter „Arbeitsschritte“ hältst du eigene Aufgaben zum Abhaken fest. Ein gespeichertes
+Projekt oder die gesamte Sammlung lässt sich mit allen Inhalten als PDF exportieren.
+Alles bleibt lokal.
 
 Der Bereich heißt in Oberfläche und PDF einheitlich „Arbeitsschritte“, „Work steps“,
 „Pasos de trabajo“, „Étapes de travail“, „Fasi di lavoro“ beziehungsweise
@@ -64,7 +65,7 @@ Auch der Export prüft diese Grenzen vor Übernahme der Zieldatei.
 Bereits vorhandene größere Sammlungen werden nicht gekürzt. Ihre Einträge
 bleiben lesbar, bearbeitbar und löschbar. Für eine vollständige Dateisicherung
 außerhalb dieser Exportgrenzen die App schließen und die Datenbank kopieren.
-Der bisherige PDF-Export des ausgewählten gespeicherten Projekts bleibt
+Der PDF-Export einzelner Projekte oder der gesamten Sammlung bleibt
 separat verfügbar. Der JSON-Export sichert die ganze Sammlung einschließlich
 Checklisten. Er verändert den PDF-Ablauf nicht.
 
@@ -184,26 +185,39 @@ insgesamt. Abgebrochene Dateiauswahl oder fehlgeschlagener Import erhalten das
 bisherige Entwurfsfoto. Verspätete Vorschauen werden nach Auswahlwechseln
 verworfen. Während Import und Speichern wartet der Dialog auf den Abschluss.
 
-## Ein Projekt als PDF mitnehmen
+## Projekte als PDF mitnehmen
 
-Im Hauptfenster ein Projekt auswählen und „Als PDF exportieren …“ anklicken.
+![PDF-Beispiel mit synthetischen Projektdaten](docs/screenshots/pdf-report.png)
+
+Im Hauptfenster „PDF-Export“ öffnen. „Ausgewähltes Projekt …“ exportiert genau
+das markierte Projekt. „Gesamte Sammlung …“ enthält alle gespeicherten Projekte,
+unabhängig von Suchfilter und Auswahl. Die Sammlung wird alphabetisch nach
+Projektnamen in der App-Sprache sortiert. Jedes Projekt beginnt auf einer neuen Seite.
 Im nativen Speicherdialog den Zielordner wählen. Costume Planner schlägt einen
 bereinigten Projektnamen mit Datum und lokaler Uhrzeit einschließlich Sekunden
 vor, zum Beispiel `Sommerkostüm-2026-10-31_09-25-00.pdf`. Der Zeitstempel wird
 beim Öffnen des Dialogs bestimmt. Du kannst den Dateinamen dort ändern.
-Ohne Auswahl bleibt die Aktion deaktiviert.
+Ohne Auswahl bleibt nur der Einzelprojektexport deaktiviert. Bei leerer Sammlung
+ist das PDF-Menü deaktiviert.
 Eine vorhandene Datei wird nur nach ausdrücklicher Bestätigung ersetzt.
 „Abbrechen“ ist bei der app-eigenen Rückfrage die sichere Vorauswahl.
 
-Exportiert wird ausschließlich der gespeicherte Stand dieses einen Projekts:
+Exportiert wird ausschließlich der gespeicherte Stand der gewählten Projekte:
 Name, vorhandene Material-, Farb- und Ortsangaben, vollständige mehrzeilige Notiz,
-deutscher Status, Foto und alle Schritte in ihrer Reihenfolge. „☑ Erledigt“ und
+Status in der App-Sprache, Foto und alle Schritte in ihrer Reihenfolge. „☑ Erledigt“ und
 „☐ Offen“ kennzeichnen die Schritte. Interne IDs und Dateipfade erscheinen nicht.
 Der Bearbeitungsdialog hat keine Exportaktion. Exportieren speichert keinen Entwurf.
 
-Das feste A4-Hochformat verteilt lange Texte und Checklisten auf mehrere Seiten.
+Das A4-Layout verwendet violette App-Akzente, ein farbiges Statusfeld,
+übersichtliche Datenkarten und einen Fortschrittsbalken für Arbeitsschritte.
+Projektfoto und Angaben stehen bei üblichen Textlängen nebeneinander. Gespeicherte
+Hexfarben erscheinen als Farbkachel mit Farbcode. Transparenz bleibt durch ein
+Schachbrettmuster erkennbar. Alte Farbbeschreibungen bleiben als Text erhalten.
+Ohne gespeichertes Foto wird kein Ersatzbild eingefügt. Lange Texte und
+Arbeitsschritte fließen vollständig auf weitere Seiten. Die Fußzeile zeigt
+die aktuelle Seite und die Gesamtseitenzahl.
 Auch lange Wörter werden umgebrochen. Das Foto bleibt proportional. Die Schrift
-DejaVu Sans ist eingebettet, auch bei vollständig offline genutzten Paketen.
+DejaVu Sans in Regular und Bold ist eingebettet, auch bei vollständig offline genutzten Paketen.
 Umlaute, ß, Eurozeichen und übliche Satzzeichen werden dargestellt. Falls ein
 Zeichen nicht unterstützt wird, bricht der Export mit seinem Unicode-Code ab,
 etwa `U+1F9F5`. Bitte dieses Zeichen im Projekt ersetzen und speichern.
@@ -283,7 +297,7 @@ Native Zielplattformtests, Signierung und Store-Einreichungen stehen noch aus.
 [Hinweise zu Fremdkomponenten](THIRD_PARTY_NOTICES.md).
 
 Keine Unteraufgaben, Vorlagen, Abhängigkeiten, Termine, Verantwortlichen,
-manuelle Umsortierung, automatischen Übergänge, Sammel-PDFs, PDF-Import,
+manuelle Umsortierung, automatischen Übergänge, PDF-Import,
 PDF-Bearbeitung, Druckverwaltung, Cloud oder weitere
 Hauptfunktionen. Es wurde nichts gepusht oder veröffentlicht.
 

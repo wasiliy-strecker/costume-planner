@@ -26,6 +26,10 @@ public final class ProjectService {
     return repository.findSaved(id);
   }
 
+  public ProjectPdfSource allSaved() {
+    return repository::readSaved;
+  }
+
   public Photo photo(long id) {
     return repository.findPhoto(id);
   }
