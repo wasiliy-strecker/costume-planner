@@ -7,7 +7,6 @@ import de.appfabrik.kostuemplan.domain.ProjectDraft;
 import de.appfabrik.kostuemplan.domain.ProjectStatus;
 import de.appfabrik.kostuemplan.i18n.AppLanguage;
 import de.appfabrik.kostuemplan.i18n.Messages;
-import de.appfabrik.kostuemplan.i18n.PrivacyNotice;
 import de.appfabrik.kostuemplan.persistence.JsonCollectionFile;
 import de.appfabrik.kostuemplan.persistence.LanguagePreferences;
 import de.appfabrik.kostuemplan.persistence.SqliteProjectRepository;
@@ -98,7 +97,7 @@ public final class MacStoreContentCapture {
     require(expected.equals(restored), "Imported fields, colors, statuses or photo bytes changed");
     new LanguagePreferences(data).save("de-DE");
     var messages = new Messages(AppLanguage.GERMAN);
-    Files.writeString(output.resolve("privacy-de-DE.txt"), PrivacyNotice.text(messages));
+
 
     Thread capture =
         new Thread(

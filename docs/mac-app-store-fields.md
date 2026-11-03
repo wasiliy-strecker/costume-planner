@@ -3,7 +3,7 @@
 Vorbereitet für **Costume Planner**, Store-Version **1.0**, Primärsprache Deutsch.
 Vorlage ist die Inhaltslieferung von Sewing Planner. Die Lieferung enthält
 fünf Bildentwürfe, direkt kopierbare Feldtexte, synthetische Beispieldaten,
-zwei echte PDF-Exporte und die bestehende deutsche Datenschutzerklärung.
+zwei echte PDF-Exporte und die kanonische englische Datenschutzerklärung.
 Die vorhandene App wurde verwendet. Kein App-Build und kein Maven-Aufruf.
 
 Die für die neue Registrierung gewählte englische Bundle-ID lautet
@@ -85,12 +85,23 @@ Projekttexte, Farbwerte, Arbeitsschritte, Reihenfolge, Seiten und Fotos wurden
 geprüft. Der Sammlungsbericht entstand bei aktiver Suche mit nur einem Treffer.
 Die PDFs sind Beispiele und keine weiteren Store-Screenshots.
 
-`Privacy/de-DE.txt` und `Privacy/index.html` enthalten vollständig die bestehende
-deutsche In-App-Erklärung. Der Aufnahmehelfer exportiert dieselbe produktive
-Quelle wie der Info-Dialog. Diese Lieferung veröffentlicht die Erklärung nicht.
-Die öffentliche Datenschutz-URL bleibt offen. Beim späteren Mac-Release die
-Bezugskanal-Hinweise auf Apple ausrichten. App und öffentliche Erklärung weiterhin
-aus derselben Quelle erzeugen.
+Für die lokale Anwendung ist weiterhin „Es werden keine Daten erfasst“ vorgesehen.
+Die App besitzt keine Konten, Werbung, Telemetrie oder eigene Cloud-Synchronisation.
+Der ausdrücklich angeforderte Browseraufruf überträgt keine Sammlung.
+
+Datenschutz-URL für alle Store-Sprachen:
+
+```text
+https://github.com/wasiliy-strecker/costume-planner/blob/main/PRIVACY.md
+```
+
+Die vollständige englische Erklärung steht in `PRIVACY.md`. Neue Übergaben
+enthalten eine unveränderte Kopie und `privacy-url.txt` unter `Privacy`.
+Vor der Einreichung die URL ohne Anmeldung öffnen und den App-Namen prüfen.
+Die optionale URL für Datenschutzoptionen bleibt leer.
+
+Händlerstatus, Inhaltsrechte und Vertragszustimmungen sind persönliche rechtliche
+Erklärungen. Diese Vorbereitung trifft oder ändert sie nicht automatisch.
 
 In App Store Connect außerdem Datenschutzangaben, Kategorie, Altersfreigabe,
 Preis und Verfügbarkeit prüfen. Produktivität passt zum beschriebenen Zweck.

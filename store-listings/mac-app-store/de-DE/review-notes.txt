@@ -12,4 +12,4 @@ Im Menü „PDF export“ beziehungsweise „PDF-Export“ ein ausgewähltes ges
 
 Beim JSON- und PDF-Export auf macOS zuerst den Zielordner freigeben und danach den Dateinamen eingeben. JSON-Exporte benötigen einen neuen Dateinamen. Vor dem Ersetzen einer vorhandenen PDF fragt die App nach.
 
-Neue Fotos werden als optimierte Kopie gespeichert. Die Originaldateien bleiben erhalten. Die App benötigt keine Internetverbindung und enthält keine Werbung, Analytics oder In-App-Käufe. Die Datenschutzerklärung ist offline unter „Info“ verfügbar.
+Neue Fotos werden als optimierte Kopie gespeichert. Die Originaldateien bleiben erhalten. Die Sammlungsverwaltung benötigt keine Internetverbindung und enthält keine Werbung, Analytics oder In-App-Käufe. „Info“ → „Datenschutz“ öffnet die englische Erklärung auf GitHub im Standardbrowser. Dafür ist eine Internetverbindung erforderlich.

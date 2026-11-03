@@ -90,8 +90,8 @@ PDF-Inhalte durch erneutes Öffnen prüfen und gerenderte Seiten visuell abnehme
 ## Datenschutz und lokale Release-Vorbereitung
 
 Build und CI sind auf Eclipse Temurin 21.0.13+9 festgelegt. Eigene Installation
-je App verwenden. Datenschutzdialog und Store-Textexport verwenden dieselben
-sechs Ressourcen. Foto-, Status-, Checklisten- und PDF-Aussagen müssen dem
+je App verwenden. Die englische `PRIVACY.md` im eigenen Repository ist die einzige gepflegte
+vollständige Datenschutzerklärung für App-Link und Store. Foto-, Status-, Checklisten- und PDF-Aussagen müssen dem
 Funktionsumfang dieser App entsprechen. Der Sammlungstransfer ist durch den ausdrücklichen Auftrag vom 31. Oktober
 2026 autorisiert. App-eigenes Format verwenden und zusätzliche Projektfelder erhalten.
 
@@ -136,6 +136,22 @@ Der Nutzer übernimmt in diesem Auftrag die Tests selbst. Paketbau mit
 
 „Info“ enthält drei getrennte Einträge: Über die App, Datenschutz und Lizenzen.
 Alle eigenen Erläuterungen und Menütexte in den sechs vorhandenen Katalogen
-pflegen. Die vollständige Datenschutzerklärung bleibt identisch zum Textexport.
+pflegen. Datenschutz führt zur eigenen englischen `PRIVACY.md` auf GitHub.
 Original-Lizenztexte unverändert einbetten. Neue Fremdkomponenten auch im
 app-lokalen Lizenzindex ergänzen. Versionsangaben stammen aus dem Maven-Build.
+
+## Kanonische Datenschutzerklärung, 3. November 2026
+
+Auf ausdrücklichen Nutzerauftrag wird ausschließlich die englische `PRIVACY.md`
+im eigenen Repository als vollständige Erklärung gepflegt. Sie übernimmt die
+bisherigen englischen App-Texte mit aktualisierten Hinweisen zum Browseraufruf.
+Die feste Adresse für diese App und alle Store-Sprachen lautet:
+
+https://github.com/wasiliy-strecker/costume-planner/blob/main/PRIVACY.md
+
+„Info“ → „Datenschutz“ öffnet diese Adresse im externen Standardbrowser.
+Keine vollständigen Datenschutztexte zusätzlich in Sprachkatalogen, Dialogen
+oder GitHub Pages pflegen. Menütexte und Startfehler bleiben lokalisiert.
+Der Python-Export kopiert ausschließlich die Originaldatei und ihre URL in
+einen neuen Lieferordner. Alte Lieferungen sind historische Nachweise.
+Diese Entscheidung ersetzt die älteren Vorgaben zum Offline-Datenschutzdialog.
