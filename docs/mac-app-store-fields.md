@@ -42,6 +42,24 @@ Demo-Zugang. Die erreichbaren Prüferkontaktdaten mit Vorname, Nachname,
 Telefonnummer im internationalen Format und E-Mail ergänzen.
 Game Center ausgeschaltet lassen. Ein Prüfungsanhang ist optional.
 
+Stand 3. November 2026: Die Feldtexte verwenden die aktuelle englische
+GitHub-Datenschutzerklärung. Die Beschreibung unterscheidet die offline
+nutzbare Projektverwaltung vom Browseraufruf. Für die Übernahme in das Portal
+die aktuellen Dateien unter `Store/de-DE` aus der neuen Übergabe verwenden.
+Die Übergabe vom 1. November bleibt als historischer Stand erhalten.
+
+Auf der Versionsseite zunächst die Texte und eigenen Prüferkontaktdaten
+eintragen und mit „Sichern“ übernehmen. Die im Screenshot bereits gewählte
+automatische Veröffentlichung erfolgt nach Apples Freigabe. Der Build wird
+nach dem Mac-Bau und Upload zugeordnet. Die optionalen Sandbox-Angaben erst
+mit dem tatsächlich signierten Paket abgleichen. Auf der separaten Seite
+„App-Datenschutz“ die `privacy-url.txt` eintragen, „Keine Daten erfasst“ für
+die beschriebene lokale Anwendung angeben und die Datenschutzangaben
+veröffentlichen. Unter „App-Informationen“ Name, Untertitel, Kategorie und
+Altersfreigabe ergänzen. Preis und Länder unter „Preise und Verfügbarkeit“
+festlegen. Diese Anleitung behauptet keine bereits im Portal gespeicherten
+Angaben oder abgeschlossene App-Einreichung.
+
 Die Texte beschreiben den tatsächlichen Funktionsumfang: Projekte mit Material,
 Farbe, Aufbewahrungsort, Notiz, einem optionalen Foto, drei Statuswerten und eigenen
 Arbeitsschritten. JSON sichert die ganze Sammlung. PDF exportiert ein ausgewähltes
