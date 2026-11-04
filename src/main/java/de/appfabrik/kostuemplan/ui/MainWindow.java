@@ -493,6 +493,9 @@ final class MainWindow {
                   saved -> {
                     projects.removeIf(existing -> existing.id() == saved.id());
                     projects.add(saved);
+                    if (project == null) {
+                      search.clear();
+                    }
                     refresh(saved.id());
                     showStatus(
                         ProjectService.search(List.of(saved), search.getText()).isEmpty()
