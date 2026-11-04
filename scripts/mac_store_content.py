@@ -217,8 +217,8 @@ def existing_runtime():
     """Read existing artifacts only. Never invoke Maven or build the application."""
     app = ROOT / "target/app-image/Costume Planner/lib/app"
     modules = ROOT / "target/javafx-modules"
-    jar = ROOT / "target/kostuemplan-0.1.0.jar"
-    dependencies = sorted(p for p in app.glob("*.jar") if p.name != jar.name)
+    jar = ROOT / "target/kostuemplan-1.0.jar"
+    dependencies = sorted(p for p in app.glob("*.jar") if not p.name.startswith("kostuemplan-"))
     files = [jar] + dependencies + sorted(modules.glob("*.jar"))
     if len(dependencies) != 7 or len(list(modules.glob("*.jar"))) != 3:
         raise ValueError(

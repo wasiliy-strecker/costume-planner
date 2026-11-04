@@ -34,8 +34,9 @@ public final class ProjectsApplication extends Application {
     messages = new Messages(AppLanguage.ENGLISH);
     try {
       String configured = getParameters().getNamed().get("data-dir");
-      if (configured != null && configured.isBlank()) {
-        throw new IllegalArgumentException("Empty data directory");
+      if (configured != null
+          && (configured.isBlank() || Boolean.getBoolean("costumeplanner.macAppStore"))) {
+        throw new IllegalArgumentException("Store launcher supplies its own data directory");
       }
       directory = configured == null ? AppDataDirectory.current() : Path.of(configured);
       preferences = new LanguagePreferences(directory);

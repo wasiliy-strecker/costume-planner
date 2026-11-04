@@ -111,7 +111,8 @@ Neue Fotos höchstens 1600 Pixel längste Seite ohne Vergrößerung, JPEG 0,85
 beziehungsweise PNG bei Transparenz. EXIF-Ausrichtung anwenden, Quellmetadaten
 nicht übernehmen. Datenbank- und JSON-Fotos nur prüfen, niemals neu codieren.
 
-Öffentlicher Name ist **Costume Planner**, Paket-ID und Datenpfade bleiben erhalten.
+Öffentlicher Name ist **Costume Planner**. Java-Namensräume und bestehende
+Datenpfade bleiben erhalten; die bestätigte Apple-Bundle-ID steht im Releaseabschnitt.
 Englisch beim Erststart, bestehende Sprachwahl behalten. Erste Store-Sprache
 de-DE. Alle sechs UI-Kataloge einschließlich Fehlermeldungen vollständig halten.
 JSON-Format `costume-planner.collection`, Version 1. Import atomar ergänzend,
@@ -129,8 +130,22 @@ mit übernommenem DISPLAY und XAUTHORITY, damit die App nach Tool-Ende offen
 bleibt. Zuerst nach vorhandenen Fenstern suchen und keine zweite Instanz der
 Sammlung öffnen. Ungespeicherte Entwürfe vor Neustart schützen.
 
-Der Nutzer übernimmt in diesem Auftrag die Tests selbst. Paketbau mit
-`-Dmaven.test.skip=true` und statische Analyse, keine Test- oder GUI-Suite.
+Die damalige Testzurückstellung galt für den Auftrag vom 31. Oktober.
+Beim aktuellen Release gelten passende automatisierte Prüfungen und die native
+Abnahme einschließlich beider PDF-Exporte aus `docs/mac-app-store-release.md`.
+
+## Mac-App-Store-Release, 4. November 2026
+
+App Store Connect `6829415108`, bestätigte Bundle-ID `de.appfabrik.costumeplanner`,
+Version 1.0, Build 1. Store- und App-Name Costume Planner. Der Nutzer hat die
+Vorbereitung und Veröffentlichung nach erfolgreicher Prüfung beauftragt.
+App-lokaler Universal-Releaseweg mit Sandbox-Launcher, Containerpfad, nativer
+Fotoauswahl und signierten ARM64-/Intel-Laufzeiten; keine gemeinsame Runtime.
+PDFBox, Schriften und Lizenzen vollständig mitliefern. Projekt-/Sammlungs-PDF,
+JSON-Transfer und Checklisten in der nativen Abnahme berücksichtigen.
+Private Profile, Schlüssel und `*.local.json` nie committen. Tatsächliche Abnahme
+dokumentieren, signiertes Paket validieren, hochladen und zur Prüfung einreichen.
+Anleitung: `docs/mac-app-store-release.md`.
 
 ## Getrennte App-Informationen, 1. November 2026
 

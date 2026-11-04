@@ -7,7 +7,11 @@ Vorschauordner dokumentieren den damaligen Stand und wurden nicht neu erzeugt.
 ## Voraussetzungen
 
 Sichtbarer Produktname: KostümPlan. Die Launcher- und Paketnamen verwenden
-`KostuemPlan` beziehungsweise `kostuemplan`. App-Kennung: `de.appfabrik.kostuemplan`.
+`KostuemPlan` beziehungsweise `kostuemplan`. macOS-Bundle-ID: `de.appfabrik.costumeplanner`.
+Der [Mac-Store-Releaseweg](mac-app-store-release.md) beschreibt das Universal-
+Paket mit Sandbox, Signierung und nativer PDF-Abnahme. Die folgenden App-Image-
+und DMG-Schritte bleiben ein separater lokaler Paketweg; historische Prüfberichte
+beziehen sich auf ihren jeweiligen damaligen Stand.
 
 Zuerst `./mvnw verify` beziehungsweise `.\mvnw.cmd verify` erfolgreich ausführen.
 Paketierung kompiliert den aktuellen Stand, wiederholt jedoch nicht die Tests.
@@ -61,7 +65,7 @@ open "target/app-image/Costume Planner.app"
 
 Das Ergebnis heißt `target/dist/kostuemplan-0.1.0-macos-x64.dmg` oder
 `target/dist/kostuemplan-0.1.0-macos-arm64.dmg`.
-Die Bundle-Kennung ist `de.appfabrik.kostuemplan`.
+Die Bundle-Kennung ist `de.appfabrik.costumeplanner`.
 Die aktuellen Pakete haben keine Distributionssignatur und sind als lokale
 Testpakete vorbereitet. Plattform-Sicherheitsdialoge sind bei der späteren
 nativen Abnahme zu berücksichtigen.

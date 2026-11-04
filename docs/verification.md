@@ -1,5 +1,22 @@
 # Prüfbericht
 
+## Mac-Store-Release, 4. November 2026
+
+Der aktuelle Release prüft Sandbox-Datenpfad, Fotoordnerhinweis, Sammlung und
+atomaren JSON-Transfer mit isolierten Testdaten. Zusätzlich QuitWorkflowUiTest,
+ExportFileDialogUiTest, ProjectEditorUiTest und PdfExportActionUiTest aktivieren.
+PDF-Inhaltstests öffnen die erzeugten Dokumente erneut und kontrollieren Texte,
+Fotos, Seitenaufteilung, Farben und Checklisten in den unterstützten Sprachen.
+
+Der Sortiertest sendet Press/Release/Click durch die echten JavaFX-Spaltenköpfe,
+statt die Betriebssystemmaus zu bewegen. Sortierzyklen, Pfeile, Spaltenreihenfolge,
+Suche, Auswahl und Projektentwurf werden weiterhin geprüft. Native Mausbedienung,
+Dateidialoge und PDF-Export aus der Sandbox gehören zur signierten App-Abnahme.
+Beide PDF-Varianten anschließend in einem unabhängigen Viewer öffnen.
+
+Releaseablauf: [Mac-Store-Release](mac-app-store-release.md). Tatsächliche Ergebnisse
+und Veröffentlichungsstatus stehen im Workspace-Changelog.
+
 ## Portable PDF-Exporte, 1. November 2026
 
 Neue Einzel- und Sammlungs-PDFs benötigen nicht mehr zwingend Hardlinks.

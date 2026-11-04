@@ -1,6 +1,7 @@
 package de.appfabrik.kostuemplan.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -10,6 +11,16 @@ import org.junit.jupiter.api.io.TempDir;
 
 class AppDataDirectoryTest {
   @TempDir Path home;
+
+  @Test
+  void storeLauncherMustProvideAnAbsoluteContainerDirectory() {
+    Path container = home.resolve("Library/Containers/de.appfabrik.costumeplanner/Data");
+    assertEquals(container, AppDataDirectory.sandboxDirectory(container.toString()));
+    assertThrows(IllegalArgumentException.class, () -> AppDataDirectory.sandboxDirectory(null));
+    assertThrows(IllegalArgumentException.class, () -> AppDataDirectory.sandboxDirectory(""));
+    assertThrows(
+        IllegalArgumentException.class, () -> AppDataDirectory.sandboxDirectory("relative"));
+  }
 
   @Test
   void resolvesWindowsDataDirectoryAndFallback() {

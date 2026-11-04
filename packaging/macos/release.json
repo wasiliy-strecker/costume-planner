@@ -1,0 +1,13 @@
+{
+  "displayName": "Costume Planner",
+  "storeName": "Costume Planner",
+  "bundleId": "de.appfabrik.costumeplanner",
+  "version": "1.0",
+  "build": "1",
+  "minimumMacOS": "11.0",
+  "category": "public.app-category.productivity",
+  "architectures": [
+    "arm64",
+    "x86_64"
+  ]
+}

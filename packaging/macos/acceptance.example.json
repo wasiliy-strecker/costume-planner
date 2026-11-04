@@ -1,0 +1,20 @@
+{
+  "arm64Execution": false,
+  "x86_64Execution": false,
+  "x86_64Method": "",
+  "sandboxStorage": false,
+  "jsonTransfer": false,
+  "restart": false,
+  "offlineLaunch": false,
+  "environmentAndNotes": "",
+  "photoSelection": false,
+  "photoDirectoryAfterRestart": false,
+  "colorSelection": false,
+  "dialogCancellation": false,
+  "statusChanges": false,
+  "checklistEdits": false,
+  "projectPdfExport": false,
+  "collectionPdfExport": false,
+  "pdfCancellation": false,
+  "sourceDigest": ""
+}

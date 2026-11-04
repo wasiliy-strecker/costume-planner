@@ -6,12 +6,10 @@ fünf Bildentwürfe, direkt kopierbare Feldtexte, synthetische Beispieldaten,
 zwei echte PDF-Exporte und die kanonische englische Datenschutzerklärung.
 Die vorhandene App wurde verwendet. Kein App-Build und kein Maven-Aufruf.
 
-Die für die neue Registrierung gewählte englische Bundle-ID lautet
-`de.appfabrik.costumeplanner`. Der gezeigte App-Store-Connect-Eintrag heißt
-Costume Planner. Seine hinterlegte Bundle-ID wurde nicht aus dem Konto ausgelesen.
-`bundle-id.txt` dokumentiert die gewählte Kennung. Die vorhandene Paketkonfiguration
-verwendet noch `de.appfabrik.kostuemplan`. Ihre Ausrichtung auf die registrierte
-englische Kennung gehört zum späteren technischen Releaseauftrag.
+Die Bundle-ID `de.appfabrik.costumeplanner` wurde am 4. November 2026 für
+App Store Connect `6829415108` bestätigt. Store- und App-Name bleiben Costume
+Planner. Der technische [Mac-Store-Releaseweg](mac-app-store-release.md) richtet
+die native Paketierung darauf aus; historische Inhaltslieferungen bleiben erhalten.
 
 ## Die gezeigte Versionsseite ausfüllen
 

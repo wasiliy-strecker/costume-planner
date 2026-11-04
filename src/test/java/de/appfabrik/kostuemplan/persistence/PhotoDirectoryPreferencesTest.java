@@ -35,4 +35,17 @@ class PhotoDirectoryPreferencesTest {
     assertEquals(directory, preferences.initialDirectory());
     assertEquals("keep", Files.readString(blocked));
   }
+
+  @Test
+  void nativePanelKeepsSavedNavigationHintEvenWhenFolderIsUnavailable() throws Exception {
+    Path folder = Files.createDirectory(directory.resolve("Fotos Ö"));
+    Path settings = directory.resolve("settings");
+    var preferences = new PhotoDirectoryPreferences(settings);
+    assertNull(preferences.lastDirectoryHint());
+    assertTrue(preferences.remember(folder.resolve("synthetic.png")));
+    Files.delete(folder);
+    var restarted = new PhotoDirectoryPreferences(settings);
+    assertEquals(folder, restarted.lastDirectoryHint());
+    assertNotEquals(folder, restarted.initialDirectory());
+  }
 }

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.appfabrik</groupId>
   <artifactId>kostuemplan</artifactId>
-  <version>0.1.0</version>
+  <version>1.0</version>
   <name>Costume Planner</name>
   <description>Lokale Kostümprojekte mit Foto, Status, Checkliste und Einzelprojekt-PDF.</description>
   <properties>

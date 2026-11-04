@@ -138,7 +138,13 @@ Im vorhandenen Linux-Workspace findet `./scripts/run.sh` auch das JDK unter
 
 Der sichtbare Produktname lautet Costume Planner. Paketdateien, Launcher und
 Datenverzeichnisse verwenden die ASCII-Schreibweise `KostuemPlan` beziehungsweise
-`kostuemplan`. Die App-Kennung ist `de.appfabrik.kostuemplan`.
+`kostuemplan`. Die macOS-Bundle-ID ist `de.appfabrik.costumeplanner`.
+Java-Namensräume und bisherige Datenpfade bleiben erhalten.
+
+Der eigene [Mac-Store-Releaseweg](docs/mac-app-store-release.md) erstellt Version
+1.0, Build 1 mit ARM64-/Intel-Laufzeiten, Sandbox und Signierung. Der Store-Build
+verwendet seinen eigenen Container; ein Datentransfer erfolgt bewusst per JSON.
+PDFBox und die eingebetteten PDF-Schriften bleiben Bestandteil der App.
 
 ## Bedienung
 

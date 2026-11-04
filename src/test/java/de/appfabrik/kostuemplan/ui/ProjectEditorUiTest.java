@@ -38,6 +38,9 @@ import javafx.scene.control.skin.TableColumnHeader;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.PickResult;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -245,7 +248,7 @@ class ProjectEditorUiTest {
   }
 
   @Test
-  void repeatedHeaderClicksAndSearchPreserveSortingAndSelectedProject() throws Exception {
+  void repeatedHeaderMouseEventsAndSearchPreserveSortingAndSelectedProject() throws Exception {
     var zulu =
         service.save(
             null,
@@ -308,10 +311,39 @@ class ProjectEditorUiTest {
                       .filter(value -> value.getTableColumn() == column)
                       .findFirst()
                       .orElseThrow();
-              var bounds = header.localToScreen(header.getBoundsInLocal());
-              var robot = new javafx.scene.robot.Robot();
-              robot.mouseMove(bounds.getCenterX(), bounds.getCenterY());
-              robot.mouseClick(javafx.scene.input.MouseButton.PRIMARY);
+              // Exercise the real header event chain without moving the user's mouse
+              // or depending on OS automation permissions and another app's focus.
+              double x = header.getWidth() / 2;
+              double y = header.getHeight() / 2;
+              for (var type :
+                  List.of(
+                      MouseEvent.MOUSE_PRESSED,
+                      MouseEvent.MOUSE_RELEASED,
+                      MouseEvent.MOUSE_CLICKED)) {
+                Event.fireEvent(
+                    header,
+                    new MouseEvent(
+                        header,
+                        header,
+                        type,
+                        x,
+                        y,
+                        0,
+                        0,
+                        MouseButton.PRIMARY,
+                        1,
+                        false,
+                        false,
+                        false,
+                        false,
+                        type == MouseEvent.MOUSE_PRESSED,
+                        false,
+                        false,
+                        false,
+                        false,
+                        true,
+                        new PickResult(header, x, y)));
+              }
               return null;
             });
         await(

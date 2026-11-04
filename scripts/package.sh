@@ -57,7 +57,7 @@ if [[ "$(uname -s)" == Linux ]]; then
   common+=(--icon "$ROOT/assets/branding/icon-256.png")
 fi
 if [[ "$(uname -s)" == Darwin ]]; then
-  common+=(--icon "$ROOT/assets/branding/icon.icns" --mac-package-identifier de.appfabrik.kostuemplan --mac-package-name "$APP_NAME")
+  common+=(--icon "$ROOT/assets/branding/icon.icns" --mac-package-identifier de.appfabrik.costumeplanner --mac-package-name "$APP_NAME")
 fi
 "$JAVA_HOME/bin/jpackage" "${common[@]}" --type app-image --dest "$IMAGE_DEST"
 if [[ "$(uname -s)" == Darwin ]]; then
